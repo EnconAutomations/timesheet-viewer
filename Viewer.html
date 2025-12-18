@@ -1,64 +1,64 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
-<html lang="en" class="dark">
+    <html lang="en" class="dark">
 
 
 
-<head>
+    <head>
 
-    <meta charset="UTF-8">
+        <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Timesheet Investigation</title>
+        <title>Timesheet Investigation</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <link
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+            rel="stylesheet">
 
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        <script>
 
-        rel="stylesheet">
+            tailwind.config = {
 
-    <script>
+                darkMode: 'class',
 
-        tailwind.config = {
+                theme: {
 
-            darkMode: 'class',
+                    extend: {
 
-            theme: {
+                        fontFamily: {
 
-                extend: {
+                            sans: ['Inter', 'sans-serif'],
 
-                    fontFamily: {
-
-                        sans: ['Inter', 'sans-serif'],
-
-                        mono: ['JetBrains Mono', 'monospace'],
-
-                    },
-
-                    colors: {
-
-                        slate: {
-
-                            850: '#151f32',
-
-                            900: '#0f172a',
-
-                            950: '#020617',
+                            mono: ['JetBrains Mono', 'monospace'],
 
                         },
 
-                        primary: {
+                        colors: {
 
-                            400: '#38bdf8',
+                            slate: {
 
-                            500: '#0ea5e9',
+                                850: '#151f32',
 
-                            600: '#0284c7',
+                                900: '#0f172a',
+
+                                950: '#020617',
+
+                            },
+
+                            primary: {
+
+                                400: '#38bdf8',
+
+                                500: '#0ea5e9',
+
+                                600: '#0284c7',
+
+                            }
 
                         }
 
@@ -68,528 +68,417 @@
 
             }
 
-        }
+        </script>
 
-    </script>
+        <style>
+            /* Glassmorphism & Utilities */
 
-    <style>
+            body {
 
-        /* Glassmorphism & Utilities */
+                background-color: #0f172a;
 
-        body {
+                background-image:
 
-            background-color: #0f172a;
+                    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
 
-            background-image:
+                    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                background-attachment: fixed;
 
-                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
-
-            background-attachment: fixed;
-
-            color: #f8fafc;
-
-        }
-
-
-
-        .glass-panel {
-
-            background: rgba(30, 41, 59, 0.7);
-
-            backdrop-filter: blur(12px);
-
-            -webkit-backdrop-filter: blur(12px);
-
-            border: 1px solid rgba(255, 255, 255, 0.08);
-
-        }
-
-
-
-        .glass-card {
-
-            background: rgba(255, 255, 255, 0.03);
-
-            border: 1px solid rgba(255, 255, 255, 0.05);
-
-            transition: all 0.2s ease;
-
-        }
-
-
-
-        .glass-card:hover {
-
-            background: rgba(255, 255, 255, 0.06);
-
-            border-color: rgba(255, 255, 255, 0.1);
-
-        }
-
-
-
-        /* Custom Scrollbar */
-
-        ::-webkit-scrollbar {
-
-            width: 6px;
-
-            height: 6px;
-
-        }
-
-
-
-        ::-webkit-scrollbar-track {
-
-            background: transparent;
-
-        }
-
-
-
-        ::-webkit-scrollbar-thumb {
-
-            background: rgba(255, 255, 255, 0.2);
-
-            border-radius: 10px;
-
-        }
-
-
-
-        ::-webkit-scrollbar-thumb:hover {
-
-            background: rgba(255, 255, 255, 0.3);
-
-        }
-
-
-
-        /* Vertical Timeline Specifics */
-
-        .v-timeline-container {
-
-            height: 600px;
-
-            overflow-y: auto;
-
-            position: relative;
-
-            background: rgba(15, 23, 42, 0.5);
-
-            border-radius: 12px;
-
-            border: 1px solid rgba(255, 255, 255, 0.05);
-
-        }
-
-
-
-        .v-timeline-grid {
-
-            display: grid;
-
-            grid-template-columns: 1fr 60px 1fr;
-
-            /* Left (ST), Axis, Right (Sam) */
-
-            min-height: 100%;
-
-            position: relative;
-
-        }
-
-
-
-        .v-time-axis {
-
-            position: relative;
-
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-
-            background: rgba(30, 41, 59, 0.3);
-
-        }
-
-
-
-        .v-time-marker {
-
-            position: absolute;
-
-            width: 100%;
-
-            text-align: center;
-
-            font-family: 'JetBrains Mono', monospace;
-
-            font-size: 10px;
-
-            color: #64748b;
-
-            border-top: 1px dashed rgba(255, 255, 255, 0.1);
-
-            transform: translateY(-50%);
-
-        }
-
-
-
-        .v-event-col {
-
-            position: relative;
-
-        }
-
-
-
-        .v-event-block {
-            position: absolute;
-            left: 4px;
-            right: 4px;
-            border-radius: 4px;
-            padding: 4px;
-            font-size: 10px;
-            color: white;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-            min-height: 8px; /* Allow smaller blocks */
-        }
-
-        .v-event-block:hover {
-            z-index: 20;
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            min-height: 30px !important; /* Expand small blocks on hover */
-            backdrop-filter: blur(5px);
-        }
-
-
-
-        /* Calendar Grid */
-
-        .calendar-grid {
-
-            display: grid;
-
-            grid-template-columns: repeat(7, 1fr);
-
-            gap: 8px;
-
-        }
-
-
-
-        .calendar-day {
-
-            aspect-ratio: 1;
-
-            border-radius: 8px;
-
-            padding: 8px;
-
-            cursor: pointer;
-
-            transition: all 0.2s;
-
-        }
-
-
-
-        .calendar-day:hover {
-
-            background: rgba(255, 255, 255, 0.05);
-
-        }
-
-
-
-        .calendar-day.active {
-
-            background: rgba(56, 189, 248, 0.15);
-
-            border: 1px solid rgba(56, 189, 248, 0.3);
-
-        }
-
-
-
-        .calendar-day.empty {
-
-            background: transparent;
-
-            cursor: default;
-
-        }
-
-
-
-        /* Animations */
-
-        @keyframes fadeIn {
-
-            from {
-
-                opacity: 0;
-
-                transform: translateY(10px);
+                color: #f8fafc;
 
             }
 
 
 
-            to {
+            .glass-panel {
 
-                opacity: 1;
+                background: rgba(30, 41, 59, 0.7);
 
-                transform: translateY(0);
+                backdrop-filter: blur(12px);
+
+                -webkit-backdrop-filter: blur(12px);
+
+                border: 1px solid rgba(255, 255, 255, 0.08);
 
             }
 
-        }
+
+
+            .glass-card {
+
+                background: rgba(255, 255, 255, 0.03);
+
+                border: 1px solid rgba(255, 255, 255, 0.05);
+
+                transition: all 0.2s ease;
+
+            }
 
 
 
-        .animate-fade-in {
+            .glass-card:hover {
 
-            animation: fadeIn 0.4s ease-out forwards;
+                background: rgba(255, 255, 255, 0.06);
 
-        }
+                border-color: rgba(255, 255, 255, 0.1);
 
-    </style>
-
-</head>
+            }
 
 
 
-<body class="h-screen flex flex-col overflow-hidden text-slate-200 font-sans selection:bg-primary-500/30">
+            /* Custom Scrollbar */
+
+            ::-webkit-scrollbar {
+
+                width: 6px;
+
+                height: 6px;
+
+            }
 
 
 
-    <!-- HEADER -->
+            ::-webkit-scrollbar-track {
 
-    <header class="glass-panel h-16 px-6 flex justify-between items-center shrink-0 z-50 border-b-0">
+                background: transparent;
 
-        <div class="flex items-center gap-4">
-
-            <div
-
-                class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-
-                <i class="fa-solid fa-layer-group text-white text-lg"></i>
-
-            </div>
-
-            <div>
-
-                <h1 class="text-lg font-bold tracking-tight text-white leading-tight">Timesheet<span
-
-                        class="text-primary-400">Reconciliation</span></h1>
-
-                <p class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Investigation Console</p>
-
-            </div>
-
-        </div>
+            }
 
 
 
-        <!-- View Switcher (Only visible when data loaded) -->
+            ::-webkit-scrollbar-thumb {
 
-        <div id="view-switcher" class="hidden bg-slate-800/50 p-1 rounded-lg border border-white/5">
+                background: rgba(255, 255, 255, 0.2);
 
-            <button onclick="switchView('calendar')" id="btn-view-calendar"
+                border-radius: 10px;
 
-                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white">
-
-                <i class="fa-regular fa-calendar mr-2"></i>Calendar
-
-            </button>
-
-            <button onclick="switchView('list')" id="btn-view-list"
-
-                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm">
-
-                <i class="fa-solid fa-list-ul mr-2"></i>List & Detail
-
-            </button>
-
-        </div>
+            }
 
 
 
-        <div class="flex gap-3">
+            ::-webkit-scrollbar-thumb:hover {
 
-            <button onclick="resetViewer()"
+                background: rgba(255, 255, 255, 0.3);
 
-                class="w-9 h-9 rounded-lg bg-slate-800/50 hover:bg-slate-700 border border-white/10 flex items-center justify-center transition text-slate-400 hover:text-white"
-
-                title="Load New File">
-
-                <i class="fa-solid fa-upload"></i>
-
-            </button>
-
-        </div>
-
-    </header>
+            }
 
 
 
-    <!-- UPLOAD OVERLAY -->
+            /* Vertical Timeline Specifics */
 
-    <div id="upload-screen" class="fixed inset-0 z-40 flex flex-col items-center justify-center p-6 bg-[#0f172a]">
+            .v-timeline-container {
 
-        <div class="max-w-lg w-full text-center animate-fade-in">
+                height: 600px;
 
-            <div
+                overflow-y: auto;
 
-                class="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/5 shadow-2xl shadow-blue-900/20 relative overflow-hidden group">
+                position: relative;
+
+                background: rgba(15, 23, 42, 0.5);
+
+                border-radius: 12px;
+
+                border: 1px solid rgba(255, 255, 255, 0.05);
+
+            }
+
+
+
+            .v-timeline-grid {
+
+                display: grid;
+
+                grid-template-columns: 1fr 60px 1fr;
+
+                /* Left (ST), Axis, Right (Sam) */
+
+                min-height: 100%;
+
+                position: relative;
+
+            }
+
+
+
+            .v-time-axis {
+
+                position: relative;
+
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+                background: rgba(30, 41, 59, 0.3);
+
+            }
+
+
+
+            .v-time-marker {
+
+                position: absolute;
+
+                width: 100%;
+
+                text-align: center;
+
+                font-family: 'JetBrains Mono', monospace;
+
+                font-size: 10px;
+
+                color: #64748b;
+
+                border-top: 1px dashed rgba(255, 255, 255, 0.1);
+
+                transform: translateY(-50%);
+
+            }
+
+
+
+            .v-event-col {
+
+                position: relative;
+
+            }
+
+
+
+            .v-event-block {
+                position: absolute;
+                left: 4px;
+                right: 4px;
+                border-radius: 4px;
+                padding: 4px;
+                font-size: 10px;
+                color: white;
+                overflow: hidden;
+                cursor: pointer;
+                transition: all 0.2s;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                z-index: 10;
+                min-height: 8px;
+                /* Allow smaller blocks */
+            }
+
+            .v-event-block:hover {
+                z-index: 20;
+                transform: scale(1.02);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                min-height: 30px !important;
+                /* Expand small blocks on hover */
+                backdrop-filter: blur(5px);
+            }
+
+
+
+            /* Calendar Grid */
+
+            .calendar-grid {
+
+                display: grid;
+
+                grid-template-columns: repeat(7, 1fr);
+
+                gap: 8px;
+
+            }
+
+
+
+            .calendar-day {
+
+                aspect-ratio: 1;
+
+                border-radius: 8px;
+
+                padding: 8px;
+
+                cursor: pointer;
+
+                transition: all 0.2s;
+
+            }
+
+
+
+            .calendar-day:hover {
+
+                background: rgba(255, 255, 255, 0.05);
+
+            }
+
+
+
+            .calendar-day.active {
+
+                background: rgba(56, 189, 248, 0.15);
+
+                border: 1px solid rgba(56, 189, 248, 0.3);
+
+            }
+
+
+
+            .calendar-day.empty {
+
+                background: transparent;
+
+                cursor: default;
+
+            }
+
+
+
+            /* Animations */
+
+            @keyframes fadeIn {
+
+                from {
+
+                    opacity: 0;
+
+                    transform: translateY(10px);
+
+                }
+
+
+
+                to {
+
+                    opacity: 1;
+
+                    transform: translateY(0);
+
+                }
+
+            }
+
+
+
+            .animate-fade-in {
+
+                animation: fadeIn 0.4s ease-out forwards;
+
+            }
+        </style>
+
+    </head>
+
+
+
+    <body class="h-screen flex flex-col overflow-hidden text-slate-200 font-sans selection:bg-primary-500/30">
+
+
+
+        <!-- HEADER -->
+
+        <header class="glass-panel h-16 px-6 flex justify-between items-center shrink-0 z-50 border-b-0">
+
+            <div class="flex items-center gap-4">
 
                 <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
 
-                    class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition duration-500">
-
-                </div>
-
-                <i
-
-                    class="fa-solid fa-cloud-arrow-up text-4xl text-primary-400 group-hover:scale-110 transition duration-300"></i>
-
-            </div>
-
-            <h2 class="text-3xl font-bold text-white mb-3">Import Reconciliation Data</h2>
-
-            <p class="text-slate-400 mb-10 text-lg font-light">Drag & drop your analysis JSON file to begin
-
-                investigation.</p>
-
-
-
-            <div id="drop-zone"
-
-                class="border-2 border-dashed border-slate-700 rounded-2xl p-12 transition-all duration-300 hover:border-primary-500/50 hover:bg-primary-500/5 group cursor-pointer relative overflow-hidden">
-
-                <div class="absolute inset-0 bg-grid-white/[0.02] pointer-events-none"></div>
-
-                <i
-
-                    class="fa-solid fa-file-code text-3xl text-slate-600 group-hover:text-primary-400 mb-4 transition"></i>
-
-                <p class="text-base font-medium text-slate-300 group-hover:text-white transition">Drop JSON file here
-
-                </p>
-
-                <p class="text-sm text-slate-500 mt-2">or click to browse</p>
-
-                <input type="file" id="file-input" accept=".json" class="hidden">
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- MAIN CONTENT -->
-
-    <main id="main-content" class="flex-1 flex overflow-hidden hidden relative">
-
-
-
-        <!-- CALENDAR VIEW -->
-
-        <div id="view-calendar" class="absolute inset-0 p-8 overflow-y-auto hidden z-10 bg-[#0f172a]">
-
-            <div class="max-w-6xl mx-auto">
-
-                <div class="flex justify-between items-end mb-8">
-
-                    <div>
-
-                        <div class="flex items-center gap-4 mb-2">
-
-                            <button onclick="changeMonth(-1)"
-
-                                class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-
-                                <i class="fa-solid fa-chevron-left"></i>
-
-                            </button>
-
-                            <h2 class="text-3xl font-bold text-white" id="calendar-month-title">October 2025</h2>
-
-                            <button onclick="changeMonth(1)"
-
-                                class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-
-                                <i class="fa-solid fa-chevron-right"></i>
-
-                            </button>
-
-                        </div>
-
-                        <p class="text-slate-400">Overview of discrepancies by date</p>
-
-                    </div>
-
-                    <div class="flex gap-2">
-
-                        <div
-
-                            class="px-3 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium">
-
-                            High Severity</div>
-
-                        <div
-
-                            class="px-3 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium">
-
-                            Medium Severity</div>
-
-                    </div>
+                    <i class="fa-solid fa-layer-group text-white text-lg"></i>
 
                 </div>
 
+                <div>
+
+                    <h1 class="text-lg font-bold tracking-tight text-white leading-tight">Timesheet<span
+                            class="text-primary-400">Reconciliation</span></h1>
+
+                    <p class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Investigation Console</p>
+
+                </div>
+
+            </div>
 
 
-                <div class="glass-panel rounded-2xl p-6">
+
+            <!-- View Switcher (Only visible when data loaded) -->
+
+            <div id="view-switcher" class="hidden bg-slate-800/50 p-1 rounded-lg border border-white/5">
+
+                <button onclick="switchView('calendar')" id="btn-view-calendar"
+                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white">
+
+                    <i class="fa-regular fa-calendar mr-2"></i>Calendar
+
+                </button>
+
+                <button onclick="switchView('list')" id="btn-view-list"
+                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm">
+
+                    <i class="fa-solid fa-list-ul mr-2"></i>List & Detail
+
+                </button>
+
+            </div>
+
+
+
+            <div class="flex gap-3">
+
+                <button onclick="resetViewer()"
+                    class="w-9 h-9 rounded-lg bg-slate-800/50 hover:bg-slate-700 border border-white/10 flex items-center justify-center transition text-slate-400 hover:text-white"
+                    title="Load New File">
+
+                    <i class="fa-solid fa-upload"></i>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- UPLOAD OVERLAY -->
+
+        <div id="upload-screen" class="fixed inset-0 z-40 flex flex-col items-center justify-center p-6 bg-[#0f172a]">
+
+            <div class="max-w-lg w-full text-center animate-fade-in">
+
+                <div
+                    class="w-24 h-24 bg-slate-800/50 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/5 shadow-2xl shadow-blue-900/20 relative overflow-hidden group">
 
                     <div
-
-                        class="grid grid-cols-7 gap-8 mb-4 text-slate-500 text-sm font-medium uppercase tracking-wider text-center">
-
-                        <div>Sun</div>
-
-                        <div>Mon</div>
-
-                        <div>Tue</div>
-
-                        <div>Wed</div>
-
-                        <div>Thu</div>
-
-                        <div>Fri</div>
-
-                        <div>Sat</div>
+                        class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition duration-500">
 
                     </div>
 
-                    <div id="calendar-grid" class="calendar-grid">
+                    <i
+                        class="fa-solid fa-cloud-arrow-up text-4xl text-primary-400 group-hover:scale-110 transition duration-300"></i>
 
-                        <!-- Calendar Days Injected Here -->
+                </div>
 
-                    </div>
+                <h2 class="text-3xl font-bold text-white mb-3">Import Reconciliation Data</h2>
+
+                <p class="text-slate-400 mb-10 text-lg font-light">Drag & drop your analysis JSON file to begin
+
+                    investigation.</p>
+
+
+
+                <div id="drop-zone"
+                    class="border-2 border-dashed border-slate-700 rounded-2xl p-12 transition-all duration-300 hover:border-primary-500/50 hover:bg-primary-500/5 group cursor-pointer relative overflow-hidden">
+
+                    <div class="absolute inset-0 bg-grid-white/[0.02] pointer-events-none"></div>
+
+                    <i
+                        class="fa-solid fa-file-code text-3xl text-slate-600 group-hover:text-primary-400 mb-4 transition"></i>
+
+                    <p class="text-base font-medium text-slate-300 group-hover:text-white transition">Drop JSON file here
+
+                    </p>
+
+                    <p class="text-sm text-slate-500 mt-2">or click to browse</p>
+
+                    <input type="file" id="file-input" accept=".json" class="hidden">
 
                 </div>
 
@@ -599,155 +488,256 @@
 
 
 
-        <!-- LIST & DETAIL VIEW -->
+        <!-- MAIN CONTENT -->
 
-        <div id="view-list" class="absolute inset-0 flex w-full h-full">
+        <main id="main-content" class="flex-1 flex overflow-hidden hidden relative">
 
 
 
-            <!-- SIDEBAR: Employee List -->
+            <!-- CALENDAR VIEW -->
 
-            <aside class="w-96 glass-panel border-r border-white/5 flex flex-col shrink-0 z-20">
+            <div id="view-calendar" class="absolute inset-0 p-8 overflow-y-auto hidden z-10 bg-[#0f172a]">
 
-                <div class="p-4 border-b border-white/5 space-y-4">
+                <div class="max-w-6xl mx-auto">
 
-                    <!-- Search -->
+                    <div class="flex justify-between items-end mb-8">
 
-                    <div class="relative group">
+                        <div>
 
-                        <i
+                            <div class="flex items-center gap-4 mb-2">
 
-                            class="fa-solid fa-search absolute left-3 top-3 text-slate-500 group-focus-within:text-primary-400 transition"></i>
+                                <button onclick="changeMonth(-1)"
+                                    class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
 
-                        <input type="text" id="search-input" placeholder="Search employees..."
+                                    <i class="fa-solid fa-chevron-left"></i>
 
-                            class="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary-500/50 focus:ring-1 focus:ring-primary-500/50 transition">
+                                </button>
+
+                                <h2 class="text-3xl font-bold text-white" id="calendar-month-title">October 2025</h2>
+
+                                <button onclick="changeMonth(1)"
+                                    class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+
+                                    <i class="fa-solid fa-chevron-right"></i>
+
+                                </button>
+
+                            </div>
+
+                            <p class="text-slate-400">Overview of discrepancies by date</p>
+
+                        </div>
+
+                        <div class="flex gap-2">
+
+                            <div
+                                class="px-3 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium">
+
+                                High Severity</div>
+
+                            <div
+                                class="px-3 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium">
+
+                                Medium Severity</div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="glass-panel rounded-2xl p-6">
+
+                        <div
+                            class="grid grid-cols-7 gap-8 mb-4 text-slate-500 text-sm font-medium uppercase tracking-wider text-center">
+
+                            <div>Sun</div>
+
+                            <div>Mon</div>
+
+                            <div>Tue</div>
+
+                            <div>Wed</div>
+
+                            <div>Thu</div>
+
+                            <div>Fri</div>
+
+                            <div>Sat</div>
+
+                        </div>
+
+                        <div id="calendar-grid" class="calendar-grid">
+
+                            <!-- Calendar Days Injected Here -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LIST & DETAIL VIEW -->
+
+            <div id="view-list" class="absolute inset-0 flex w-full h-full">
+
+
+
+                <!-- SIDEBAR: Employee List -->
+
+                <aside class="w-96 glass-panel border-r border-white/5 flex flex-col shrink-0 z-20">
+
+                    <div class="p-4 border-b border-white/5 space-y-4">
+
+                        <!-- Search -->
+
+                        <div class="relative group">
+
+                            <i
+                                class="fa-solid fa-search absolute left-3 top-3 text-slate-500 group-focus-within:text-primary-400 transition"></i>
+
+                            <input type="text" id="search-input" placeholder="Search employees..."
+                                class="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary-500/50 focus:ring-1 focus:ring-primary-500/50 transition">
+
+                        </div>
+
+
+
+                        <!-- Filters -->
+
+                        <div class="flex gap-2">
+
+                            <select id="severity-filter"
+                                class="flex-1 bg-slate-800/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-primary-500/50">
+
+                                <option value="ALL">All Severities</option>
+
+                                <option value="HIGH">High Only</option>
+
+                                <option value="MEDIUM">Medium Only</option>
+
+                            </select>
+
+                            <select id="flag-filter"
+                                class="flex-1 bg-slate-800/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-primary-500/50">
+
+                                <option value="ALL">All Flags</option>
+
+                                <option value="EXCESS_HOURS_CLAIMED">Excess Hours</option>
+
+                                <option value="VEHICLE_USE_AFTER_SHIFT">After Shift</option>
+
+                            </select>
+
+                        </div>
 
                     </div>
 
 
 
-                    <!-- Filters -->
+                    <div id="employee-list" class="flex-1 overflow-y-auto p-3 space-y-2">
 
-                    <div class="flex gap-2">
-
-                        <select id="severity-filter"
-
-                            class="flex-1 bg-slate-800/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-primary-500/50">
-
-                            <option value="ALL">All Severities</option>
-
-                            <option value="HIGH">High Only</option>
-
-                            <option value="MEDIUM">Medium Only</option>
-
-                        </select>
-
-                        <select id="flag-filter"
-
-                            class="flex-1 bg-slate-800/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-primary-500/50">
-
-                            <option value="ALL">All Flags</option>
-
-                            <option value="EXCESS_HOURS_CLAIMED">Excess Hours</option>
-
-                            <option value="VEHICLE_USE_AFTER_SHIFT">After Shift</option>
-
-                        </select>
+                        <!-- Employee Items -->
 
                     </div>
 
-                </div>
 
 
+                    <div class="p-3 border-t border-white/5 text-xs text-center text-slate-500 font-mono">
 
-                <div id="employee-list" class="flex-1 overflow-y-auto p-3 space-y-2">
-
-                    <!-- Employee Items -->
-
-                </div>
-
-
-
-                <div class="p-3 border-t border-white/5 text-xs text-center text-slate-500 font-mono">
-
-                    <span id="record-count">0</span> Records Found
-
-                </div>
-
-            </aside>
-
-
-
-            <!-- DETAIL CONTENT -->
-
-            <div class="flex-1 overflow-y-auto bg-slate-900/50 p-8 relative">
-
-
-
-                <!-- Empty State -->
-
-                <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-500">
-
-                    <div
-
-                        class="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 border border-white/5">
-
-                        <i class="fa-regular fa-hand-point-left text-3xl opacity-50"></i>
+                        <span id="record-count">0</span> Records Found
 
                     </div>
 
-                    <p class="text-lg font-light">Select an employee to investigate</p>
-
-                </div>
+                </aside>
 
 
 
-                <!-- Detail View -->
+                <!-- DETAIL CONTENT -->
 
-                <div id="detail-view" class="hidden max-w-6xl mx-auto space-y-6 pb-20">
-
-
-
-                    <!-- Header Card -->
-
-                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden border border-white/10">
-
-                        <div class="absolute top-0 left-0 w-1.5 h-full bg-red-500" id="detail-severity-bar"></div>
+                <div class="flex-1 overflow-y-auto bg-slate-900/50 p-8 relative">
 
 
 
-                        <div class="flex justify-between items-start relative z-10">
+                    <!-- Empty State -->
 
-                            <div>
+                    <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-500">
 
-                                <div class="flex items-center gap-4 mb-2">
+                        <div
+                            class="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 border border-white/5">
 
-                                    <h2 class="text-3xl font-bold text-white tracking-tight" id="detail-name">Employee
+                            <i class="fa-regular fa-hand-point-left text-3xl opacity-50"></i>
 
-                                        Name</h2>
+                        </div>
 
-                                    <span id="detail-severity-badge"
+                        <p class="text-lg font-light">Select an employee to investigate</p>
 
-                                        class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/20">HIGH</span>
+                    </div>
 
-                                </div>
 
-                                <div class="flex items-center gap-6 text-sm text-slate-400">
 
-                                    <div class="flex items-center gap-2">
+                    <!-- Detail View -->
 
-                                        <i class="fa-regular fa-calendar text-slate-500"></i>
+                    <div id="detail-view" class="hidden max-w-6xl mx-auto space-y-6 pb-20">
 
-                                        <span id="detail-date">YYYY-MM-DD</span>
+
+
+                        <!-- Header Card -->
+
+                        <div class="glass-panel rounded-2xl p-8 relative overflow-hidden border border-white/10">
+
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-red-500" id="detail-severity-bar"></div>
+
+
+
+                            <div class="flex justify-between items-start relative z-10">
+
+                                <div>
+
+                                    <div class="flex items-center gap-4 mb-2">
+
+                                        <h2 class="text-3xl font-bold text-white tracking-tight" id="detail-name">Employee
+
+                                            Name</h2>
+
+                                        <span id="detail-severity-badge"
+                                            class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/20">HIGH</span>
 
                                     </div>
 
-                                    <div class="flex items-center gap-2">
+                                    <div class="flex items-center gap-6 text-sm text-slate-400">
 
-                                        <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                                        <div class="flex items-center gap-2">
 
-                                        <span id="detail-flag" class="text-slate-200">Flag Type</span>
+                                            <i class="fa-regular fa-calendar text-slate-500"></i>
+
+                                            <span id="detail-date">YYYY-MM-DD</span>
+
+                                        </div>
+
+                                        <div class="flex items-center gap-2">
+
+                                            <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+
+                                            <span id="detail-flag" class="text-slate-200">Flag Type</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="text-right">
+
+                                    <div class="text-4xl font-bold text-white font-mono tracking-tight" id="detail-diff">
+
+                                        0.0h</div>
+
+                                    <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mt-1">Discrepancy
 
                                     </div>
 
@@ -755,13 +745,29 @@
 
                             </div>
 
-                            <div class="text-right">
 
-                                <div class="text-4xl font-bold text-white font-mono tracking-tight" id="detail-diff">
 
-                                    0.0h</div>
+                            <!-- Analysis Box -->
 
-                                <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mt-1">Discrepancy
+                            <div class="mt-8 bg-slate-950/50 rounded-xl p-5 border border-white/5">
+
+                                <h3 class="text-xs font-bold text-primary-400 uppercase mb-3 flex items-center gap-2">
+
+                                    <i class="fa-solid fa-chart-line"></i> Analysis
+
+                                </h3>
+
+                                <p class="text-slate-300 text-sm leading-relaxed" id="detail-description">Analysis text...
+
+                                </p>
+
+                                <div class="mt-4 pt-4 border-t border-white/5 flex gap-8 text-sm font-mono">
+
+                                    <div><span class="text-slate-500">Unauthorized Miles:</span> <span
+                                            class="text-white ml-2" id="detail-miles">0</span> mi</div>
+
+                                    <div><span class="text-slate-500">Unauthorized Time:</span> <span
+                                            class="text-white ml-2" id="detail-unauth-time">0</span> h</div>
 
                                 </div>
 
@@ -771,63 +777,38 @@
 
 
 
-                        <!-- Analysis Box -->
+                        <!-- Vertical Timeline Visualization -->
 
-                        <div class="mt-8 bg-slate-950/50 rounded-xl p-5 border border-white/5">
-
-                            <h3 class="text-xs font-bold text-primary-400 uppercase mb-3 flex items-center gap-2">
-
-                                <i class="fa-solid fa-chart-line"></i> Analysis
-
+                        <div class="flex justify-between items-end mb-4">
+                            <h3 class="font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-timeline text-slate-500"></i> Activity Comparison
                             </h3>
-
-                            <p class="text-slate-300 text-sm leading-relaxed" id="detail-description">Analysis text...
-
-                            </p>
-
-                            <div class="mt-4 pt-4 border-t border-white/5 flex gap-8 text-sm font-mono">
-
-                                <div><span class="text-slate-500">Unauthorized Miles:</span> <span
-
-                                        class="text-white ml-2" id="detail-miles">0</span> mi</div>
-
-                                <div><span class="text-slate-500">Unauthorized Time:</span> <span
-
-                                        class="text-white ml-2" id="detail-unauth-time">0</span> h</div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Vertical Timeline Visualization -->
-
-                    <div class="flex justify-between items-end mb-4">
-                        <h3 class="font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-timeline text-slate-500"></i> Activity Comparison
-                        </h3>
-                        <div class="flex items-center gap-4 text-[10px] font-medium text-slate-400">
-                            <span class="text-blue-400">ServiceTitan (Left)</span>
-                            <span class="text-emerald-400">Samsara Trips (Right)</span>
-                            <span class="text-amber-400">⚠ Potential Work</span>
-                            <!-- Zoom controls -->
-                            <div class="flex items-center gap-1 ml-4 border-l border-white/10 pl-4">
-                                <button onclick="changeZoom(-0.5)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 transition" title="Zoom Out">
-                                    <i class="fa-solid fa-minus text-xs"></i>
-                                </button>
-                                <span id="zoom-level" class="px-2 text-slate-400 font-mono min-w-[40px] text-center">1.0x</span>
-                                <button onclick="changeZoom(0.5)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 transition" title="Zoom In">
-                                    <i class="fa-solid fa-plus text-xs"></i>
-                                </button>
-                                <button onclick="resetZoom()" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 transition" title="Reset Zoom">
-                                    <i class="fa-solid fa-expand text-xs"></i>
-                                </button>
+                            <div class="flex items-center gap-4 text-[10px] font-medium text-slate-400">
+                                <span class="text-blue-400">ServiceTitan (Left)</span>
+                                <span class="text-emerald-400">Samsara Trips (Right)</span>
+                                <span class="text-amber-400">⚠ Potential Work</span>
+                                <!-- Zoom controls -->
+                                <div class="flex items-center gap-1 ml-4 border-l border-white/10 pl-4">
+                                    <button onclick="changeZoom(-0.5)"
+                                        class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 transition"
+                                        title="Zoom Out">
+                                        <i class="fa-solid fa-minus text-xs"></i>
+                                    </button>
+                                    <span id="zoom-level"
+                                        class="px-2 text-slate-400 font-mono min-w-[40px] text-center">1.0x</span>
+                                    <button onclick="changeZoom(0.5)"
+                                        class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 transition"
+                                        title="Zoom In">
+                                        <i class="fa-solid fa-plus text-xs"></i>
+                                    </button>
+                                    <button onclick="resetZoom()"
+                                        class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 transition"
+                                        title="Reset Zoom">
+                                        <i class="fa-solid fa-expand text-xs"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
 
@@ -865,16 +846,13 @@
 
                         <!-- ServiceTitan List -->
 
-                        <div
-
-                            class="glass-panel rounded-2xl overflow-hidden border border-white/10 flex flex-col h-[500px]">
+                        <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 flex flex-col h-[500px]">
 
                             <div class="p-4 border-b border-white/5 bg-blue-500/5 flex justify-between items-center">
 
                                 <h3 class="font-bold text-blue-100 text-sm">ServiceTitan Log</h3>
 
                                 <span class="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-1 rounded"
-
                                     id="st-total">0.0h</span>
 
                             </div>
@@ -887,16 +865,13 @@
 
                         <!-- Samsara List -->
 
-                        <div
-
-                            class="glass-panel rounded-2xl overflow-hidden border border-white/10 flex flex-col h-[500px]">
+                        <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 flex flex-col h-[500px]">
 
                             <div class="p-4 border-b border-white/5 bg-emerald-500/5 flex justify-between items-center">
 
                                 <h3 class="font-bold text-emerald-100 text-sm">Samsara Log</h3>
 
                                 <span class="text-xs font-mono text-emerald-300 bg-emerald-500/10 px-2 py-1 rounded"
-
                                     id="sam-total">0.0h</span>
 
                             </div>
@@ -913,926 +888,940 @@
 
             </div>
 
-        </div>
+            </div>
 
-    </main>
-
-
-
-    <script>
-
-        // --- STATE ---
-
-        let appData = { discrepancies: [] };
-
-        let groupedData = {}; // { "YYYY-MM-DD": [items] }
-
-        let currentView = 'list'; // 'list' or 'calendar'
-
-        let currentFilter = { search: '', severity: 'ALL', flag: 'ALL' };
-
-        let calendarDate = new Date(); // Current month being viewed
-
-        let timelineZoom = 1.0; // Timeline zoom level (0.5x to 3.0x)
+        </main>
 
 
 
-        // --- INITIALIZATION ---
+        <script>
 
-        const dropZone = document.getElementById('drop-zone');
+            // --- STATE ---
 
-        const fileInput = document.getElementById('file-input');
+            let appData = { discrepancies: [] };
 
+            let groupedData = {}; // { "YYYY-MM-DD": [items] }
 
+            let currentView = 'list'; // 'list' or 'calendar'
 
-        // Drag & Drop
+            let currentFilter = { search: '', severity: 'ALL', flag: 'ALL' };
 
-        dropZone.addEventListener('click', () => fileInput.click());
+            let calendarDate = new Date(); // Current month being viewed
 
-        dropZone.addEventListener('dragover', (e) => {
-
-            e.preventDefault();
-
-            dropZone.classList.add('border-primary-500', 'bg-primary-500/10');
-
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-
-            dropZone.classList.remove('border-primary-500', 'bg-primary-500/10');
-
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-
-            e.preventDefault();
-
-            dropZone.classList.remove('border-primary-500', 'bg-primary-500/10');
-
-            handleFiles(e.dataTransfer.files);
-
-        });
-
-        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+            let timelineZoom = 1.0; // Timeline zoom level (0.5x to 3.0x)
 
 
 
-        function handleFiles(files) {
+            // --- INITIALIZATION ---
 
-            if (files.length === 0) return;
+            const dropZone = document.getElementById('drop-zone');
 
-            const reader = new FileReader();
+            const fileInput = document.getElementById('file-input');
 
-            reader.onload = (e) => {
 
-                try {
 
-                    const json = JSON.parse(e.target.result);
+            // Drag & Drop
 
-                    loadData(json);
+            dropZone.addEventListener('click', () => fileInput.click());
 
-                } catch (err) {
+            dropZone.addEventListener('dragover', (e) => {
 
-                    alert('Invalid JSON file.');
+                e.preventDefault();
 
-                    console.error(err);
+                dropZone.classList.add('border-primary-500', 'bg-primary-500/10');
+
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+
+                dropZone.classList.remove('border-primary-500', 'bg-primary-500/10');
+
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+
+                e.preventDefault();
+
+                dropZone.classList.remove('border-primary-500', 'bg-primary-500/10');
+
+                handleFiles(e.dataTransfer.files);
+
+            });
+
+            fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+
+
+            function handleFiles(files) {
+
+                if (files.length === 0) return;
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+
+                    try {
+
+                        const json = JSON.parse(e.target.result);
+
+                        loadData(json);
+
+                    } catch (err) {
+
+                        alert('Invalid JSON file.');
+
+                        console.error(err);
+
+                    }
+
+                };
+
+                reader.readAsText(files[0]);
+
+            }
+
+
+
+            function loadData(json) {
+
+                appData = json;
+
+
+
+                // Group data by date for calendar
+
+                groupedData = {};
+
+                appData.discrepancies.forEach(item => {
+
+                    if (!groupedData[item.date]) groupedData[item.date] = [];
+
+                    groupedData[item.date].push(item);
+
+                });
+
+
+
+                document.getElementById('upload-screen').classList.add('hidden');
+
+                document.getElementById('main-content').classList.remove('hidden');
+
+                document.getElementById('view-switcher').classList.remove('hidden');
+
+                document.getElementById('view-switcher').classList.add('flex');
+
+
+
+                renderSidebar();
+
+
+
+                // Default to Calendar view if data spans multiple days, else List
+
+                const dates = Object.keys(groupedData).sort();
+
+                if (dates.length > 0) {
+
+                    // Set calendar to first month with data
+
+                    calendarDate = new Date(dates[0]);
+
+                    // Adjust to first day of that month to avoid timezone/overflow issues
+
+                    calendarDate.setDate(1);
+
+                    renderCalendar();
 
                 }
 
-            };
-
-            reader.readAsText(files[0]);
-
-        }
 
 
+                if (dates.length > 1) switchView('calendar');
 
-        function loadData(json) {
+                else switchView('list');
 
-            appData = json;
+            }
 
 
 
-            // Group data by date for calendar
+            function resetViewer() {
 
-            groupedData = {};
+                location.reload(); // Simplest reset
 
-            appData.discrepancies.forEach(item => {
+            }
 
-                if (!groupedData[item.date]) groupedData[item.date] = [];
 
-                groupedData[item.date].push(item);
+
+            function switchView(view) {
+
+                currentView = view;
+
+                const calBtn = document.getElementById('btn-view-calendar');
+
+                const listBtn = document.getElementById('btn-view-list');
+
+                const calView = document.getElementById('view-calendar');
+
+                const listView = document.getElementById('view-list');
+
+
+
+                if (view === 'calendar') {
+
+                    calBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
+
+                    listBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
+
+                    calView.classList.remove('hidden');
+
+                    listView.classList.add('hidden');
+
+                    // Re-render to ensure correct size/layout if needed
+
+                    renderCalendar();
+
+                } else {
+
+                    listBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
+
+                    calBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
+
+                    listView.classList.remove('hidden');
+
+                    calView.classList.add('hidden');
+
+                }
+
+            }
+
+
+
+            // --- CALENDAR LOGIC ---
+
+            function changeMonth(delta) {
+
+                calendarDate.setMonth(calendarDate.getMonth() + delta);
+
+                renderCalendar();
+
+            }
+
+
+
+            function renderCalendar() {
+
+                const grid = document.getElementById('calendar-grid');
+
+                grid.innerHTML = '';
+
+
+
+                const year = calendarDate.getFullYear();
+
+                const month = calendarDate.getMonth(); // 0-indexed
+
+
+
+                document.getElementById('calendar-month-title').innerText = calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+
+
+                // Days in month
+
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                const startDay = new Date(year, month, 1).getDay(); // 0 = Sun
+
+
+
+                // Empty slots for start
+
+                for (let i = 0; i < startDay; i++) {
+
+                    const el = document.createElement('div');
+
+                    el.className = 'calendar-day empty';
+
+                    grid.appendChild(el);
+
+                }
+
+
+
+                // Days
+
+                for (let d = 1; d <= daysInMonth; d++) {
+
+                    // Format date as YYYY-MM-DD (local time safe)
+
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+                    const items = groupedData[dateStr] || [];
+
+
+
+                    const el = document.createElement('div');
+
+                    el.className = `calendar-day glass-card flex flex-col justify-between ${items.length > 0 ? 'hover:bg-slate-800 cursor-pointer' : 'opacity-50'}`;
+
+
+
+                    let indicators = '';
+
+                    let highCount = items.filter(i => i.severity === 'HIGH').length;
+
+                    let medCount = items.filter(i => i.severity !== 'HIGH').length;
+
+
+
+                    if (items.length > 0) {
+
+                        el.onclick = () => openDateInList(dateStr);
+
+                        indicators = `
+
+                            <div class="flex gap-1 mt-1 flex-wrap">
+
+                                ${highCount > 0 ? `<span class="h-1.5 w-1.5 rounded-full bg-red-500" title="${highCount} High"></span>`.repeat(Math.min(highCount, 5)) : ''}
+
+                                ${medCount > 0 ? `<span class="h-1.5 w-1.5 rounded-full bg-amber-500" title="${medCount} Medium"></span>`.repeat(Math.min(medCount, 3)) : ''}
+
+                            </div>
+
+                        `;
+
+                    }
+
+
+
+                    el.innerHTML = `
+
+                        <div class="text-right text-sm font-medium ${items.length > 0 ? 'text-white' : 'text-slate-600'}">${d}</div>
+
+                        <div>${indicators}</div>
+
+                    `;
+
+                    grid.appendChild(el);
+
+                }
+
+            }
+
+
+
+            function openDateInList(dateStr) {
+
+                // Filter list to this date
+
+                document.getElementById('search-input').value = dateStr; // Hacky but works with filter logic
+
+                currentFilter.search = dateStr;
+
+                renderSidebar();
+
+                switchView('list');
+
+
+
+                // Auto-select first item
+
+                const firstItem = appData.discrepancies.find(i => i.date === dateStr);
+
+                if (firstItem) loadDetail(firstItem);
+
+            }
+
+
+
+            // --- SIDEBAR & FILTER ---
+
+            document.getElementById('search-input').addEventListener('input', (e) => {
+
+                currentFilter.search = e.target.value.toLowerCase();
+
+                renderSidebar();
+
+            });
+
+            document.getElementById('severity-filter').addEventListener('change', (e) => {
+
+                currentFilter.severity = e.target.value;
+
+                renderSidebar();
+
+            });
+
+            document.getElementById('flag-filter').addEventListener('change', (e) => {
+
+                currentFilter.flag = e.target.value;
+
+                renderSidebar();
 
             });
 
 
 
-            document.getElementById('upload-screen').classList.add('hidden');
+            function renderSidebar() {
 
-            document.getElementById('main-content').classList.remove('hidden');
+                const listContainer = document.getElementById('employee-list');
 
-            document.getElementById('view-switcher').classList.remove('hidden');
+                listContainer.innerHTML = '';
 
-            document.getElementById('view-switcher').classList.add('flex');
 
 
+                const filtered = appData.discrepancies.filter(item => {
 
-            renderSidebar();
+                    const searchStr = (item.employeeName + ' ' + item.date).toLowerCase();
 
+                    const matchesSearch = searchStr.includes(currentFilter.search);
 
+                    const matchesSeverity = currentFilter.severity === 'ALL' || item.severity === currentFilter.severity;
 
-            // Default to Calendar view if data spans multiple days, else List
+                    const matchesFlag = currentFilter.flag === 'ALL' || item.flag === currentFilter.flag;
 
-            const dates = Object.keys(groupedData).sort();
+                    return matchesSearch && matchesSeverity && matchesFlag;
 
-            if (dates.length > 0) {
+                });
 
-                // Set calendar to first month with data
 
-                calendarDate = new Date(dates[0]);
 
-                // Adjust to first day of that month to avoid timezone/overflow issues
+                document.getElementById('record-count').innerText = filtered.length;
 
-                calendarDate.setDate(1);
 
-                renderCalendar();
 
-            }
+                filtered.forEach(item => {
 
+                    const el = document.createElement('div');
 
+                    const isHigh = item.severity === 'HIGH';
 
-            if (dates.length > 1) switchView('calendar');
+                    el.className = `p-3 rounded-lg cursor-pointer border transition-all duration-200 hover:translate-x-1 ${isHigh ? 'bg-red-500/5 border-red-500/20 hover:bg-red-500/10' : 'bg-slate-800/50 border-white/5 hover:bg-slate-800'}`;
 
-            else switchView('list');
 
-        }
 
+                    el.innerHTML = `
 
+                        <div class="flex justify-between items-start mb-1">
 
-        function resetViewer() {
+                            <h4 class="font-bold text-sm text-slate-200 truncate pr-2">${item.employeeName}</h4>
 
-            location.reload(); // Simplest reset
+                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${isHigh ? 'bg-red-500/20 text-red-400' : 'bg-slate-700 text-slate-400'}">${item.severity}</span>
 
-        }
+                        </div>
 
+                        <div class="flex justify-between items-center">
 
+                            <div class="text-xs text-slate-500 font-mono">${item.date}</div>
 
-        function switchView(view) {
-
-            currentView = view;
-
-            const calBtn = document.getElementById('btn-view-calendar');
-
-            const listBtn = document.getElementById('btn-view-list');
-
-            const calView = document.getElementById('view-calendar');
-
-            const listView = document.getElementById('view-list');
-
-
-
-            if (view === 'calendar') {
-
-                calBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
-
-                listBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
-
-                calView.classList.remove('hidden');
-
-                listView.classList.add('hidden');
-
-                // Re-render to ensure correct size/layout if needed
-
-                renderCalendar();
-
-            } else {
-
-                listBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
-
-                calBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
-
-                listView.classList.remove('hidden');
-
-                calView.classList.add('hidden');
-
-            }
-
-        }
-
-
-
-        // --- CALENDAR LOGIC ---
-
-        function changeMonth(delta) {
-
-            calendarDate.setMonth(calendarDate.getMonth() + delta);
-
-            renderCalendar();
-
-        }
-
-
-
-        function renderCalendar() {
-
-            const grid = document.getElementById('calendar-grid');
-
-            grid.innerHTML = '';
-
-
-
-            const year = calendarDate.getFullYear();
-
-            const month = calendarDate.getMonth(); // 0-indexed
-
-
-
-            document.getElementById('calendar-month-title').innerText = calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-
-
-            // Days in month
-
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            const startDay = new Date(year, month, 1).getDay(); // 0 = Sun
-
-
-
-            // Empty slots for start
-
-            for (let i = 0; i < startDay; i++) {
-
-                const el = document.createElement('div');
-
-                el.className = 'calendar-day empty';
-
-                grid.appendChild(el);
-
-            }
-
-
-
-            // Days
-
-            for (let d = 1; d <= daysInMonth; d++) {
-
-                // Format date as YYYY-MM-DD (local time safe)
-
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-
-                const items = groupedData[dateStr] || [];
-
-
-
-                const el = document.createElement('div');
-
-                el.className = `calendar-day glass-card flex flex-col justify-between ${items.length > 0 ? 'hover:bg-slate-800 cursor-pointer' : 'opacity-50'}`;
-
-
-
-                let indicators = '';
-
-                let highCount = items.filter(i => i.severity === 'HIGH').length;
-
-                let medCount = items.filter(i => i.severity !== 'HIGH').length;
-
-
-
-                if (items.length > 0) {
-
-                    el.onclick = () => openDateInList(dateStr);
-
-                    indicators = `
-
-                        <div class="flex gap-1 mt-1 flex-wrap">
-
-                            ${highCount > 0 ? `<span class="h-1.5 w-1.5 rounded-full bg-red-500" title="${highCount} High"></span>`.repeat(Math.min(highCount, 5)) : ''}
-
-                            ${medCount > 0 ? `<span class="h-1.5 w-1.5 rounded-full bg-amber-500" title="${medCount} Medium"></span>`.repeat(Math.min(medCount, 3)) : ''}
+                            <div class="text-[10px] text-slate-400 truncate max-w-[120px]">${formatFlag(item.flag)}</div>
 
                         </div>
 
                     `;
 
+                    el.onclick = () => loadDetail(item);
+
+                    listContainer.appendChild(el);
+
+                });
+
+            }
+
+
+
+            function formatFlag(flag) {
+
+                return flag.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+
+            }
+
+
+
+            // --- DETAIL VIEW ---
+
+            function loadDetail(item) {
+
+                document.getElementById('empty-state').classList.add('hidden');
+
+                document.getElementById('detail-view').classList.remove('hidden');
+
+
+
+                // Header Data
+
+                document.getElementById('detail-name').innerText = item.employeeName;
+
+                document.getElementById('detail-date').innerText = item.date;
+
+                document.getElementById('detail-flag').innerText = formatFlag(item.flag);
+
+
+
+                const isHigh = item.severity === 'HIGH';
+
+                const sevBadge = document.getElementById('detail-severity-badge');
+
+                sevBadge.innerText = item.severity;
+
+                sevBadge.className = `px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${isHigh ? 'bg-red-500/20 text-red-400 border-red-500/20' : 'bg-amber-500/20 text-amber-400 border-amber-500/20'}`;
+
+                document.getElementById('detail-severity-bar').className = `absolute top-0 left-0 w-1.5 h-full ${isHigh ? 'bg-red-500' : 'bg-amber-500'}`;
+
+
+
+                document.getElementById('detail-diff').innerText = (item.analysis.hourDifference > 0 ? '+' : '') + item.analysis.hourDifference.toFixed(2) + 'h';
+
+                document.getElementById('detail-diff').className = `text-4xl font-bold font-mono tracking-tight ${item.analysis.hourDifference > 0 ? 'text-red-400' : 'text-white'}`;
+
+
+
+                document.getElementById('detail-description').innerText = item.analysis.issueDescription;
+
+                document.getElementById('detail-miles').innerText = item.analysis.unauthorizedMiles;
+
+                document.getElementById('detail-unauth-time').innerText = item.analysis.unauthorizedHours.toFixed(2);
+
+
+
+                document.getElementById('st-total').innerText = item.serviceTitan.totalClaimedHours.toFixed(2) + 'h';
+
+                document.getElementById('sam-total').innerText = item.samsara.totalVehicleHours.toFixed(2) + 'h';
+
+
+
+                renderTimeline(item);
+
+                renderLists(item);
+
+            }
+
+            // --- ZOOM CONTROLS ---
+            function changeZoom(delta) {
+                timelineZoom = Math.max(0.5, Math.min(3.0, timelineZoom + delta));
+                document.getElementById('zoom-level').innerText = timelineZoom.toFixed(1) + 'x';
+
+                // Re-render timeline with current item
+                const currentName = document.getElementById('detail-name').innerText;
+                const currentDate = document.getElementById('detail-date').innerText;
+                const currentItem = appData.discrepancies.find(d =>
+                    d.employeeName === currentName && d.date === currentDate
+                );
+                if (currentItem) renderTimeline(currentItem);
+            }
+
+            function resetZoom() {
+                timelineZoom = 1.0;
+                document.getElementById('zoom-level').innerText = '1.0x';
+
+                // Re-render timeline with current item
+                const currentName = document.getElementById('detail-name').innerText;
+                const currentDate = document.getElementById('detail-date').innerText;
+                const currentItem = appData.discrepancies.find(d =>
+                    d.employeeName === currentName && d.date === currentDate
+                );
+                if (currentItem) renderTimeline(currentItem);
+            }
+
+
+
+            // --- VERTICAL TIMELINE RENDERER ---
+
+            function renderTimeline(item) {
+
+                const colSt = document.getElementById('col-st');
+
+                const colSam = document.getElementById('col-sam');
+
+                const colAxis = document.getElementById('col-axis');
+
+
+
+                colSt.innerHTML = '';
+
+                colSam.innerHTML = '';
+
+                colAxis.innerHTML = '';
+
+
+
+                // Config: Pixels per minute
+
+                const pxPerMin = 2 * timelineZoom;
+
+                const startHour = 4; // Start at 4 AM
+
+                const endHour = 22;  // End at 10 PM
+
+                const totalMinutes = (endHour - startHour) * 60;
+
+                const totalHeight = totalMinutes * pxPerMin;
+
+
+
+                // Set grid height
+
+                document.getElementById('v-timeline-grid').style.height = `${totalHeight}px`;
+
+
+
+                // Render Axis (Every hour)
+
+                for (let h = startHour; h <= endHour; h++) {
+
+                    const top = (h - startHour) * 60 * pxPerMin;
+
+                    const el = document.createElement('div');
+
+                    el.className = 'v-time-marker';
+
+                    el.style.top = `${top}px`;
+
+                    el.innerText = formatHour(h);
+
+                    colAxis.appendChild(el);
+
                 }
 
 
 
-                el.innerHTML = `
+                // Helper: Time to Top/Height
 
-                    <div class="text-right text-sm font-medium ${items.length > 0 ? 'text-white' : 'text-slate-600'}">${d}</div>
+                const getPos = (timeStr, duration) => {
 
-                    <div>${indicators}</div>
+                    if (!timeStr) return { top: 0, height: 0 };
 
-                `;
+                    try {
+                        let h, m;
 
-                grid.appendChild(el);
+                        // Try AM/PM format first (e.g., "6:30 AM")
+                        const ampmParts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                        if (ampmParts) {
+                            h = parseInt(ampmParts[1]);
+                            m = parseInt(ampmParts[2]);
+                            const p = ampmParts[3].toUpperCase();
+                            if (p === 'PM' && h < 12) h += 12;
+                            if (p === 'AM' && h === 12) h = 0;
+                        } else {
+                            // Try 24-hour format (e.g., "06:30:00" or "2025-12-08 06:41:10")
+                            const time24Parts = timeStr.match(/(\d{2}):(\d{2}):?(\d{2})?/);
+                            if (time24Parts) {
+                                h = parseInt(time24Parts[1]);
+                                m = parseInt(time24Parts[2]);
+                            }
+                        }
 
-            }
+                        if (h !== undefined && m !== undefined) {
+                            const minutesFromStart = (h * 60 + m) - (startHour * 60);
 
-        }
+                            const top = Math.max(0, minutesFromStart * pxPerMin);
 
+                            const height = Math.max(8, duration * 60 * pxPerMin); // Min height 8px for better density
 
+                            return { top, height };
 
-        function openDateInList(dateStr) {
+                        }
 
-            // Filter list to this date
+                    } catch (e) { console.error('Time parse error:', e, timeStr); }
 
-            document.getElementById('search-input').value = dateStr; // Hacky but works with filter logic
+                    return { top: 0, height: 0 };
 
-            currentFilter.search = dateStr;
+                };
 
-            renderSidebar();
 
-            switchView('list');
 
+                // Render ServiceTitan
 
+                item.serviceTitan.activities.forEach(act => {
 
-            // Auto-select first item
+                    const { top, height } = getPos(act.startTime, act.duration);
 
-            const firstItem = appData.discrepancies.find(i => i.date === dateStr);
-
-            if (firstItem) loadDetail(firstItem);
-
-        }
-
-
-
-        // --- SIDEBAR & FILTER ---
-
-        document.getElementById('search-input').addEventListener('input', (e) => {
-
-            currentFilter.search = e.target.value.toLowerCase();
-
-            renderSidebar();
-
-        });
-
-        document.getElementById('severity-filter').addEventListener('change', (e) => {
-
-            currentFilter.severity = e.target.value;
-
-            renderSidebar();
-
-        });
-
-        document.getElementById('flag-filter').addEventListener('change', (e) => {
-
-            currentFilter.flag = e.target.value;
-
-            renderSidebar();
-
-        });
-
-
-
-        function renderSidebar() {
-
-            const listContainer = document.getElementById('employee-list');
-
-            listContainer.innerHTML = '';
-
-
-
-            const filtered = appData.discrepancies.filter(item => {
-
-                const searchStr = (item.employeeName + ' ' + item.date).toLowerCase();
-
-                const matchesSearch = searchStr.includes(currentFilter.search);
-
-                const matchesSeverity = currentFilter.severity === 'ALL' || item.severity === currentFilter.severity;
-
-                const matchesFlag = currentFilter.flag === 'ALL' || item.flag === currentFilter.flag;
-
-                return matchesSearch && matchesSeverity && matchesFlag;
-
-            });
-
-
-
-            document.getElementById('record-count').innerText = filtered.length;
-
-
-
-            filtered.forEach(item => {
-
-                const el = document.createElement('div');
-
-                const isHigh = item.severity === 'HIGH';
-
-                el.className = `p-3 rounded-lg cursor-pointer border transition-all duration-200 hover:translate-x-1 ${isHigh ? 'bg-red-500/5 border-red-500/20 hover:bg-red-500/10' : 'bg-slate-800/50 border-white/5 hover:bg-slate-800'}`;
-
-
-
-                el.innerHTML = `
-
-                    <div class="flex justify-between items-start mb-1">
-
-                        <h4 class="font-bold text-sm text-slate-200 truncate pr-2">${item.employeeName}</h4>
-
-                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${isHigh ? 'bg-red-500/20 text-red-400' : 'bg-slate-700 text-slate-400'}">${item.severity}</span>
-
-                    </div>
-
-                    <div class="flex justify-between items-center">
-
-                        <div class="text-xs text-slate-500 font-mono">${item.date}</div>
-
-                        <div class="text-[10px] text-slate-400 truncate max-w-[120px]">${formatFlag(item.flag)}</div>
-
-                    </div>
-
-                `;
-
-                el.onclick = () => loadDetail(item);
-
-                listContainer.appendChild(el);
-
-            });
-
-        }
-
-
-
-        function formatFlag(flag) {
-
-            return flag.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
-
-        }
-
-
-
-        // --- DETAIL VIEW ---
-
-        function loadDetail(item) {
-
-            document.getElementById('empty-state').classList.add('hidden');
-
-            document.getElementById('detail-view').classList.remove('hidden');
-
-
-
-            // Header Data
-
-            document.getElementById('detail-name').innerText = item.employeeName;
-
-            document.getElementById('detail-date').innerText = item.date;
-
-            document.getElementById('detail-flag').innerText = formatFlag(item.flag);
-
-
-
-            const isHigh = item.severity === 'HIGH';
-
-            const sevBadge = document.getElementById('detail-severity-badge');
-
-            sevBadge.innerText = item.severity;
-
-            sevBadge.className = `px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${isHigh ? 'bg-red-500/20 text-red-400 border-red-500/20' : 'bg-amber-500/20 text-amber-400 border-amber-500/20'}`;
-
-            document.getElementById('detail-severity-bar').className = `absolute top-0 left-0 w-1.5 h-full ${isHigh ? 'bg-red-500' : 'bg-amber-500'}`;
-
-
-
-            document.getElementById('detail-diff').innerText = (item.analysis.hourDifference > 0 ? '+' : '') + item.analysis.hourDifference.toFixed(2) + 'h';
-
-            document.getElementById('detail-diff').className = `text-4xl font-bold font-mono tracking-tight ${item.analysis.hourDifference > 0 ? 'text-red-400' : 'text-white'}`;
-
-
-
-            document.getElementById('detail-description').innerText = item.analysis.issueDescription;
-
-            document.getElementById('detail-miles').innerText = item.analysis.unauthorizedMiles;
-
-            document.getElementById('detail-unauth-time').innerText = item.analysis.unauthorizedHours.toFixed(2);
-
-
-
-            document.getElementById('st-total').innerText = item.serviceTitan.totalClaimedHours.toFixed(2) + 'h';
-
-            document.getElementById('sam-total').innerText = item.samsara.totalVehicleHours.toFixed(2) + 'h';
-
-
-
-            renderTimeline(item);
-
-            renderLists(item);
-
-        }
-
-        // --- ZOOM CONTROLS ---
-        function changeZoom(delta) {
-            timelineZoom = Math.max(0.5, Math.min(3.0, timelineZoom + delta));
-            document.getElementById('zoom-level').innerText = timelineZoom.toFixed(1) + 'x';
-            
-            // Re-render timeline with current item
-            const currentName = document.getElementById('detail-name').innerText;
-            const currentDate = document.getElementById('detail-date').innerText;
-            const currentItem = appData.discrepancies.find(d => 
-                d.employeeName === currentName && d.date === currentDate
-            );
-            if (currentItem) renderTimeline(currentItem);
-        }
-
-        function resetZoom() {
-            timelineZoom = 1.0;
-            document.getElementById('zoom-level').innerText = '1.0x';
-            
-            // Re-render timeline with current item
-            const currentName = document.getElementById('detail-name').innerText;
-            const currentDate = document.getElementById('detail-date').innerText;
-            const currentItem = appData.discrepancies.find(d => 
-                d.employeeName === currentName && d.date === currentDate
-            );
-            if (currentItem) renderTimeline(currentItem);
-        }
-
-
-
-        // --- VERTICAL TIMELINE RENDERER ---
-
-        function renderTimeline(item) {
-
-            const colSt = document.getElementById('col-st');
-
-            const colSam = document.getElementById('col-sam');
-
-            const colAxis = document.getElementById('col-axis');
-
-
-
-            colSt.innerHTML = '';
-
-            colSam.innerHTML = '';
-
-            colAxis.innerHTML = '';
-
-
-
-            // Config: Pixels per minute
-
-            const pxPerMin = 2 * timelineZoom;
-
-            const startHour = 4; // Start at 4 AM
-
-            const endHour = 22;  // End at 10 PM
-
-            const totalMinutes = (endHour - startHour) * 60;
-
-            const totalHeight = totalMinutes * pxPerMin;
-
-
-
-            // Set grid height
-
-            document.getElementById('v-timeline-grid').style.height = `${totalHeight}px`;
-
-
-
-            // Render Axis (Every hour)
-
-            for (let h = startHour; h <= endHour; h++) {
-
-                const top = (h - startHour) * 60 * pxPerMin;
-
-                const el = document.createElement('div');
-
-                el.className = 'v-time-marker';
-
-                el.style.top = `${top}px`;
-
-                el.innerText = formatHour(h);
-
-                colAxis.appendChild(el);
-
-            }
-
-
-
-            // Helper: Time to Top/Height
-
-            const getPos = (timeStr, duration) => {
-
-                if (!timeStr) return { top: 0, height: 0 };
-
-                try {
-
-                    const parts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
-
-                    if (parts) {
-
-                        let h = parseInt(parts[1]);
-
-                        const m = parseInt(parts[2]);
-
-                        const p = parts[3].toUpperCase();
-
-                        if (p === 'PM' && h < 12) h += 12;
-
-                        if (p === 'AM' && h === 12) h = 0;
-
-
-
-                        const minutesFromStart = (h * 60 + m) - (startHour * 60);
-
-                        const top = Math.max(0, minutesFromStart * pxPerMin);
-
-                        const height = Math.max(8, duration * 60 * pxPerMin); // Min height 8px for better density
-
-                        return { top, height };
-
-                    }
-
-                } catch (e) { }
-
-                return { top: 0, height: 0 };
-
-            };
-
-
-
-            // Render ServiceTitan
-
-            item.serviceTitan.activities.forEach(act => {
-
-                const { top, height } = getPos(act.startTime, act.duration);
-
-                const el = document.createElement('div');
-
-
-
-                let bg = 'bg-blue-500/20 border-blue-500/50 text-blue-200';
-
-                if (act.activityType.toLowerCase().includes('travel')) bg = 'bg-blue-400/20 border-blue-400/50 text-blue-200';
-
-                if (act.activityType.toLowerCase().includes('shop')) bg = 'bg-indigo-400/20 border-indigo-400/50 text-indigo-200';
-
-
-
-                el.className = `v-event-block ${bg} flex flex-col justify-center px-2`;
-
-                el.style.top = `${top}px`;
-
-                el.style.height = `${height}px`;
-
-
-
-                el.innerHTML = `
-
-                    <div class="font-bold truncate">${act.jobNumber || 'Non-Job'}</div>
-
-                    <div class="text-[9px] opacity-70 truncate">${act.activityType}</div>
-
-                `;
-
-                el.title = `${act.activityType}\n${act.startTime} - ${act.endTime}\n${act.duration.toFixed(2)}h`;
-
-                colSt.appendChild(el);
-
-            });
-
-
-
-            // Render Samsara Trips
-
-            item.samsara.trips.forEach(trip => {
-
-                const { top, height } = getPos(trip.startTime, trip.duration);
-
-                const el = document.createElement('div');
-
-
-
-                let bg = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-200';
-
-                if (trip.flagged) bg = 'bg-red-500/20 border-red-500/50 text-red-200';
-
-                else if (trip.distance < 0.5) bg = 'bg-slate-600/20 border-slate-500/50 text-slate-300';
-
-
-
-                el.className = `v-event-block ${bg} flex flex-col justify-center px-2`;
-
-                el.style.top = `${top}px`;
-
-                el.style.height = `${height}px`;
-
-
-
-                const icon = trip.distance < 0.5 ? '<i class="fa-solid fa-parking"></i>' : '<i class="fa-solid fa-car"></i>';
-
-
-
-                el.innerHTML = `
-
-                    <div class="font-bold truncate flex items-center gap-2">${icon} ${trip.distance < 0.5 ? 'Stopped' : trip.distance + ' mi'}</div>
-
-                    <div class="text-[9px] opacity-70 truncate">${trip.startLocation}</div>
-
-                `;
-
-                el.title = `${trip.startLocation} -> ${trip.endLocation}\n${trip.startTime} - ${trip.endTime}\n${trip.distance} mi`;
-
-                colSam.appendChild(el);
-
-            });
-
-            // Render Samsara Gaps (Potential Work Periods)
-            if (item.samsara.gaps && item.samsara.gaps.length > 0) {
-                item.samsara.gaps.forEach(gap => {
-                    const { top, height } = getPos(gap.startTime, gap.duration);
                     const el = document.createElement('div');
 
-                    // Yellow/amber for potential work, lighter gray for normal gaps
-                    let bg = gap.isPotentialWork
-                        ? 'bg-amber-500/30 border-amber-500/60 text-amber-200'
-                        : 'bg-slate-700/20 border-slate-600/40 text-slate-400';
 
-                    el.className = `v-event-block ${bg} flex flex-col justify-center px-2 border-dashed`;
+
+                    let bg = 'bg-blue-500/20 border-blue-500/50 text-blue-200';
+
+                    if (act.activityType.toLowerCase().includes('travel')) bg = 'bg-blue-400/20 border-blue-400/50 text-blue-200';
+
+                    if (act.activityType.toLowerCase().includes('shop')) bg = 'bg-indigo-400/20 border-indigo-400/50 text-indigo-200';
+
+
+
+                    el.className = `v-event-block ${bg} flex flex-col justify-center px-2`;
+
                     el.style.top = `${top}px`;
+
                     el.style.height = `${height}px`;
 
-                    const icon = gap.isPotentialWork
-                        ? '<i class="fa-solid fa-wrench"></i>'
-                        : '<i class="fa-solid fa-clock"></i>';
+
 
                     el.innerHTML = `
 
-                        <div class="font-bold truncate flex items-center gap-2">${icon} ${gap.isPotentialWork ? 'Potential Work' : 'Gap'}</div>
+                        <div class="font-bold truncate">${act.jobNumber || 'Non-Job'}</div>
 
-                        <div class="text-[9px] opacity-70 truncate">${gap.duration.toFixed(1)}h at ${gap.location}</div>
+                        <div class="text-[9px] opacity-70 truncate">${act.activityType}</div>
 
                     `;
-                    el.title = `${gap.isPotentialWork ? 'POTENTIAL WORK PERIOD' : 'Gap Between Trips'}\n${gap.startTime} - ${gap.endTime}\nDuration: ${gap.duration.toFixed(2)}h\nLocation: ${gap.location}`;
-                    colSam.appendChild(el);
+
+                    el.title = `${act.activityType}\n${act.startTime} - ${act.endTime}\n${act.duration.toFixed(2)}h`;
+
+                    colSt.appendChild(el);
+
                 });
+
+
+
+                // Render Samsara Trips
+
+                item.samsara.trips.forEach(trip => {
+
+                    const { top, height } = getPos(trip.startTime, trip.duration);
+
+                    const el = document.createElement('div');
+
+
+
+                    let bg = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-200';
+
+                    if (trip.flagged) bg = 'bg-red-500/20 border-red-500/50 text-red-200';
+
+                    else if (trip.distance < 0.5) bg = 'bg-slate-600/20 border-slate-500/50 text-slate-300';
+
+
+
+                    el.className = `v-event-block ${bg} flex flex-col justify-center px-2`;
+
+                    el.style.top = `${top}px`;
+
+                    el.style.height = `${height}px`;
+
+
+
+                    const icon = trip.distance < 0.5 ? '<i class="fa-solid fa-parking"></i>' : '<i class="fa-solid fa-car"></i>';
+
+
+
+                    el.innerHTML = `
+
+                        <div class="font-bold truncate flex items-center gap-2">${icon} ${trip.distance < 0.5 ? 'Stopped' : trip.distance + ' mi'}</div>
+
+                        <div class="text-[9px] opacity-70 truncate">${trip.startLocation}</div>
+
+                    `;
+
+                    el.title = `${trip.startLocation} -> ${trip.endLocation}\n${trip.startTime} - ${trip.endTime}\n${trip.distance} mi`;
+
+                    colSam.appendChild(el);
+
+                });
+
+                // Render Samsara Gaps (Potential Work Periods)
+                if (item.samsara.gaps && item.samsara.gaps.length > 0) {
+                    item.samsara.gaps.forEach(gap => {
+                        const { top, height } = getPos(gap.startTime, gap.duration);
+                        const el = document.createElement('div');
+
+                        // Yellow/amber for potential work, lighter gray for normal gaps
+                        let bg = gap.isPotentialWork
+                            ? 'bg-amber-500/30 border-amber-500/60 text-amber-200'
+                            : 'bg-slate-700/20 border-slate-600/40 text-slate-400';
+
+                        el.className = `v-event-block ${bg} flex flex-col justify-center px-2 border-dashed`;
+                        el.style.top = `${top}px`;
+                        el.style.height = `${height}px`;
+
+                        const icon = gap.isPotentialWork
+                            ? '<i class="fa-solid fa-wrench"></i>'
+                            : '<i class="fa-solid fa-clock"></i>';
+
+                        el.innerHTML = `
+
+                            <div class="font-bold truncate flex items-center gap-2">${icon} ${gap.isPotentialWork ? 'Potential Work' : 'Gap'}</div>
+
+                            <div class="text-[9px] opacity-70 truncate">${gap.duration.toFixed(1)}h at ${gap.location}</div>
+
+                        `;
+                        el.title = `${gap.isPotentialWork ? 'POTENTIAL WORK PERIOD' : 'Gap Between Trips'}\n${gap.startTime} - ${gap.endTime}\nDuration: ${gap.duration.toFixed(2)}h\nLocation: ${gap.location}`;
+                        colSam.appendChild(el);
+                    });
+                }
+
             }
 
-        }
+
+
+            function formatHour(h) {
+
+                const p = h >= 12 ? 'PM' : 'AM';
+
+                const d = h % 12 || 12;
+
+                return `${d} ${p}`;
+
+            }
+
+            // Helper: Format any time string to HH:MM display
+            function formatTimeDisplay(timeStr) {
+                if (!timeStr) return '';
+                // Match HH:MM:SS or YYYY-MM-DD HH:MM:SS patterns
+                const match = timeStr.match(/(\d{2}):(\d{2})/);
+                if (match) {
+                    return `${match[1]}:${match[2]}`;
+                }
+                return timeStr;
+            }
 
 
 
-        function formatHour(h) {
+            // --- LIST RENDERER ---
 
-            const p = h >= 12 ? 'PM' : 'AM';
+            function renderLists(item) {
 
-            const d = h % 12 || 12;
+                const listSt = document.getElementById('list-st');
 
-            return `${d} ${p}`;
+                const listSam = document.getElementById('list-sam');
 
-        }
+                listSt.innerHTML = '';
 
-
-
-        // --- LIST RENDERER ---
-
-        function renderLists(item) {
-
-            const listSt = document.getElementById('list-st');
-
-            const listSam = document.getElementById('list-sam');
-
-            listSt.innerHTML = '';
-
-            listSam.innerHTML = '';
+                listSam.innerHTML = '';
 
 
 
-            // ServiceTitan
+                // ServiceTitan
 
-            item.serviceTitan.activities.forEach(act => {
+                item.serviceTitan.activities.forEach(act => {
 
-                const el = document.createElement('div');
+                    const el = document.createElement('div');
 
-                el.className = 'p-3 rounded bg-slate-800/30 border border-white/5 flex gap-3 hover:bg-slate-800/50 transition';
+                    el.className = 'p-3 rounded bg-slate-800/30 border border-white/5 flex gap-3 hover:bg-slate-800/50 transition';
 
-                el.innerHTML = `
+                    el.innerHTML = `
 
+                        <div class="w-16 text-[10px] font-mono text-slate-500 pt-1 shrink-0 text-right">
+
+                            <div>${formatTimeDisplay(act.startTime)}</div>
+
+                            <div class="text-slate-600">|</div>
+
+                            <div>${formatTimeDisplay(act.endTime)}</div>
+
+                        </div>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="font-bold text-blue-200 text-sm truncate">${act.jobNumber || 'Non-Job'}</div>
+
+                            <div class="text-xs text-slate-400 truncate">${act.activityType}</div>
+
+                            <div class="text-[10px] text-slate-500 mt-1">${act.customer || ''}</div>
+
+                        </div>
+
+                        <div class="text-xs font-mono text-slate-400">${act.duration.toFixed(2)}h</div>
+
+                    `;
+
+                    listSt.appendChild(el);
+
+                });
+
+
+
+                // Samsara Trips & Gaps (interleaved chronologically)
+                const samEvents = [];
+
+                // Add trips
+                item.samsara.trips.forEach(trip => {
+                    samEvents.push({ type: 'trip', data: trip, time: trip.startTime });
+                });
+
+                // Add gaps
+                if (item.samsara.gaps) {
+                    item.samsara.gaps.forEach(gap => {
+                        samEvents.push({ type: 'gap', data: gap, time: gap.startTime });
+                    });
+                }
+
+                // Sort chronologically (simple string comparison works for HH:MM AM/PM)
+                samEvents.sort((a, b) => {
+                    // Convert to comparable format
+                    const timeA = new Date('1970-01-01 ' + a.time);
+                    const timeB = new Date('1970-01-01 ' + b.time);
+                    return timeA - timeB;
+                });
+
+                // Render events
+                samEvents.forEach(event => {
+                    if (event.type === 'trip') {
+                        const trip = event.data;
+                        const el = document.createElement('div');
+                        const isStop = trip.distance < 0.5;
+                        el.className = `p-3 rounded border flex gap-3 transition ${trip.flagged ? 'bg-red-500/10 border-red-500/20' : 'bg-slate-800/30 border-white/5 hover:bg-slate-800/50'}`;
+                        el.innerHTML = `
                     <div class="w-16 text-[10px] font-mono text-slate-500 pt-1 shrink-0 text-right">
-
-                        <div>${act.startTime}</div>
-
+                        <div>${formatTimeDisplay(trip.startTime)}</div>
                         <div class="text-slate-600">|</div>
-
-                        <div>${act.endTime}</div>
-
+                        <div>${formatTimeDisplay(trip.endTime)}</div>
                     </div>
-
-                    <div class="flex-1 min-w-0">
-
-                        <div class="font-bold text-blue-200 text-sm truncate">${act.jobNumber || 'Non-Job'}</div>
-
-                        <div class="text-xs text-slate-400 truncate">${act.activityType}</div>
-
-                        <div class="text-[10px] text-slate-500 mt-1">${act.customer || ''}</div>
-
+                    <div class="flex-1 min-w-0 flex flex-col justify-between">
+                        <!-- Start Location aligned with start time -->
+                        <div class="text-[11px] font-semibold text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-dot text-emerald-400 text-[8px]"></i>
+                            <span class="truncate">${trip.startLocation}</span>
+                        </div>
+                        <!-- Journey indicator -->
+                        <div class="flex items-center gap-2 text-slate-600 my-0.5 pl-3">
+                            <div class="flex-1 border-t border-slate-600 border-dashed"></div>
+                        </div>
+                        <!-- End Location aligned with end time -->
+                        <div class="text-[11px] font-semibold text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-red-400 text-[8px]"></i>
+                            <span class="truncate">${isStop ? 'Stopped' : trip.endLocation}</span>
+                        </div>
+                        ${trip.flagged ? `<div class="text-[10px] text-red-400 mt-1 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> ${trip.note}</div>` : ''}
                     </div>
-
-                    <div class="text-xs font-mono text-slate-400">${act.duration.toFixed(2)}h</div>
-
+                    <div class="text-right">
+                        <div class="text-xs font-mono text-slate-400">${trip.duration.toFixed(2)}h</div>
+                        <div class="text-[10px] text-slate-500">${trip.distance} mi</div>
+                    </div>
                 `;
-
-                listSt.appendChild(el);
-
-            });
-
-
-
-    // Samsara Trips & Gaps (interleaved chronologically)
-    const samEvents = [];
-
-    // Add trips
-    item.samsara.trips.forEach(trip => {
-        samEvents.push({ type: 'trip', data: trip, time: trip.startTime });
-    });
-
-    // Add gaps
-    if (item.samsara.gaps) {
-        item.samsara.gaps.forEach(gap => {
-            samEvents.push({ type: 'gap', data: gap, time: gap.startTime });
-        });
-    }
-
-    // Sort chronologically (simple string comparison works for HH:MM AM/PM)
-    samEvents.sort((a, b) => {
-        // Convert to comparable format
-        const timeA = new Date('1970-01-01 ' + a.time);
-        const timeB = new Date('1970-01-01 ' + b.time);
-        return timeA - timeB;
-    });
-
-    // Render events
-    samEvents.forEach(event => {
-        if (event.type === 'trip') {
-            const trip = event.data;
-            const el = document.createElement('div');
-            const isStop = trip.distance < 0.5;
-            el.className = `p-3 rounded border flex gap-3 transition ${trip.flagged ? 'bg-red-500/10 border-red-500/20' : 'bg-slate-800/30 border-white/5 hover:bg-slate-800/50'}`;
-            el.innerHTML = `
-                <div class="w-16 text-[10px] font-mono text-slate-500 pt-1 shrink-0 text-right">
-                    <div>${trip.startTime}</div>
-                    <div class="text-slate-600">|</div>
-                    <div>${trip.endTime}</div>
-                </div>
-                <div class="flex-1 min-w-0 flex flex-col justify-between">
-                    <!-- Start Location aligned with start time -->
-                    <div class="text-[11px] font-semibold text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-dot text-emerald-400 text-[8px]"></i>
-                        <span class="truncate">${trip.startLocation}</span>
+                        listSam.appendChild(el);
+                    } else if (event.type === 'gap') {
+                        const gap = event.data;
+                        const el = document.createElement('div');
+                        const isPotentialWork = gap.isPotentialWork;
+                        el.className = `p-3 rounded border flex gap-3 transition ${isPotentialWork ? 'bg-amber-500/10 border-amber-500/30 border-dashed' : 'bg-slate-700/10 border-slate-600/20 border-dashed'}`;
+                        el.innerHTML = `
+                    <div class="w-16 text-[10px] font-mono text-slate-500 pt-1 shrink-0 text-right">
+                        <div>${formatTimeDisplay(gap.startTime)}</div>
+                        <div class="text-slate-600">|</div>
+                        <div>${formatTimeDisplay(gap.endTime)}</div>
                     </div>
-                    <!-- Journey indicator -->
-                    <div class="flex items-center gap-2 text-slate-600 my-0.5 pl-3">
-                        <div class="flex-1 border-t border-slate-600 border-dashed"></div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-center">
+                        <div class="text-[11px] font-semibold ${isPotentialWork ? 'text-amber-300' : 'text-slate-400'} flex items-center gap-2">
+                            <i class="fa-solid ${isPotentialWork ? 'fa-wrench' : 'fa-clock'} text-[8px]"></i>
+                            <span class="truncate">${isPotentialWork ? 'Potential Work Period' : 'Gap Between Trips'}</span>
+                        </div>
+                        <div class="text-[10px] text-slate-500 mt-1">Parked at ${gap.location}</div>
+                        ${isPotentialWork ? '<div class="text-[10px] text-amber-400 mt-1 font-bold"><i class="fa-solid fa-info-circle"></i> Check timesheet for work entries</div>' : ''}
                     </div>
-                    <!-- End Location aligned with end time -->
-                    <div class="text-[11px] font-semibold text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-location-dot text-red-400 text-[8px]"></i>
-                        <span class="truncate">${isStop ? 'Stopped' : trip.endLocation}</span>
+                    <div class="text-right">
+                        <div class="text-xs font-mono ${isPotentialWork ? 'text-amber-300' : 'text-slate-400'}">${gap.duration.toFixed(2)}h</div>
                     </div>
-                    ${trip.flagged ? `<div class="text-[10px] text-red-400 mt-1 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> ${trip.note}</div>` : ''}
-                </div>
-                <div class="text-right">
-                    <div class="text-xs font-mono text-slate-400">${trip.duration.toFixed(2)}h</div>
-                    <div class="text-[10px] text-slate-500">${trip.distance} mi</div>
-                </div>
-            `;
-            listSam.appendChild(el);
-        } else if (event.type === 'gap') {
-            const gap = event.data;
-            const el = document.createElement('div');
-            const isPotentialWork = gap.isPotentialWork;
-            el.className = `p-3 rounded border flex gap-3 transition ${isPotentialWork ? 'bg-amber-500/10 border-amber-500/30 border-dashed' : 'bg-slate-700/10 border-slate-600/20 border-dashed'}`;
-            el.innerHTML = `
-                <div class="w-16 text-[10px] font-mono text-slate-500 pt-1 shrink-0 text-right">
-                    <div>${gap.startTime}</div>
-                    <div class="text-slate-600">|</div>
-                    <div>${gap.endTime}</div>
-                </div>
-                <div class="flex-1 min-w-0 flex flex-col justify-center">
-                    <div class="text-[11px] font-semibold ${isPotentialWork ? 'text-amber-300' : 'text-slate-400'} flex items-center gap-2">
-                        <i class="fa-solid ${isPotentialWork ? 'fa-wrench' : 'fa-clock'} text-[8px]"></i>
-                        <span class="truncate">${isPotentialWork ? 'Potential Work Period' : 'Gap Between Trips'}</span>
-                    </div>
-                    <div class="text-[10px] text-slate-500 mt-1">Parked at ${gap.location}</div>
-                    ${isPotentialWork ? '<div class="text-[10px] text-amber-400 mt-1 font-bold"><i class="fa-solid fa-info-circle"></i> Check timesheet for work entries</div>' : ''}
-                </div>
-                <div class="text-right">
-                    <div class="text-xs font-mono ${isPotentialWork ? 'text-amber-300' : 'text-slate-400'}">${gap.duration.toFixed(2)}h</div>
-                </div>
-            `;
-            listSam.appendChild(el);
-        }
-    });
+                `;
+                        listSam.appendChild(el);
+                    }
+                });
 
-        }
+            }
 
 
 
-    </script>
+        </script>
 
-</body>
+    </body>
 
 
 
-</html>
+    </html>
