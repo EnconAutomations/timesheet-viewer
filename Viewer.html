@@ -819,13 +819,27 @@
 
                             </p>
 
-                            <div class="mt-4 pt-4 border-t border-white/5 flex gap-8 text-sm font-mono">
+                            <div class="mt-4 pt-4 border-t border-white/5 grid grid-cols-2 gap-6 text-sm">
 
-                                <div><span class="text-slate-500">Unauthorized Miles:</span> <span
-                                        class="text-white ml-2" id="detail-miles">0</span> mi</div>
+                                <div>
+                                    <div class="text-slate-500 text-xs uppercase mb-1">📋 ServiceTitan Window</div>
+                                    <div class="text-white font-mono" id="detail-st-window">--</div>
+                                </div>
 
-                                <div><span class="text-slate-500">Unauthorized Time:</span> <span
-                                        class="text-white ml-2" id="detail-unauth-time">0</span> h</div>
+                                <div>
+                                    <div class="text-slate-500 text-xs uppercase mb-1">🚗 Samsara Window</div>
+                                    <div class="text-white font-mono" id="detail-sam-window">--</div>
+                                </div>
+
+                                <div>
+                                    <span class="text-slate-500">Unauthorized Miles:</span>
+                                    <span class="text-white ml-2 font-mono" id="detail-miles">0</span> mi
+                                </div>
+
+                                <div>
+                                    <span class="text-slate-500">Unauthorized Time:</span>
+                                    <span class="text-white ml-2 font-mono" id="detail-unauth-time">0</span>
+                                </div>
 
                             </div>
 
@@ -1424,7 +1438,7 @@
 
             document.getElementById('detail-name').innerText = item.employeeName;
 
-            document.getElementById('detail-date').innerText = item.date;
+            document.getElementById('detail-date').innerText = formatDateAmerican(item.date);
 
             document.getElementById('detail-flag').innerText = formatFlag(item.flag);
 
@@ -1442,7 +1456,7 @@
 
 
 
-            document.getElementById('detail-diff').innerText = (item.analysis.hourDifference > 0 ? '+' : '') + item.analysis.hourDifference.toFixed(2) + 'h';
+            document.getElementById('detail-diff').innerText = (item.analysis.hourDifference > 0 ? '+' : '') + formatDuration(Math.abs(item.analysis.hourDifference)) + ' (' + item.analysis.hourDifference.toFixed(2) + 'h)';
 
             document.getElementById('detail-diff').className = `text-4xl font-bold font-mono tracking-tight ${item.analysis.hourDifference > 0 ? 'text-red-400' : 'text-white'}`;
 
@@ -1452,13 +1466,17 @@
 
             document.getElementById('detail-miles').innerText = item.analysis.unauthorizedMiles;
 
-            document.getElementById('detail-unauth-time').innerText = item.analysis.unauthorizedHours.toFixed(2);
+            document.getElementById('detail-unauth-time').innerText = formatDuration(item.analysis.unauthorizedHours) + ' (' + item.analysis.unauthorizedHours.toFixed(2) + 'h)';
+
+            // Work Windows
+            document.getElementById('detail-st-window').innerText = `${item.serviceTitan.workWindow.start} - ${item.serviceTitan.workWindow.end} (${item.serviceTitan.workWindow.duration})`;
+            document.getElementById('detail-sam-window').innerText = `${item.samsara.workWindow.start} - ${item.samsara.workWindow.end} (${item.samsara.workWindow.duration})`;
 
 
 
-            document.getElementById('st-total').innerText = item.serviceTitan.totalClaimedHours.toFixed(2) + 'h';
+            document.getElementById('st-total').innerText = formatDuration(item.serviceTitan.totalClaimedHours) + ' (' + item.serviceTitan.totalClaimedHours.toFixed(2) + 'h)';
 
-            document.getElementById('sam-total').innerText = item.samsara.totalVehicleHours.toFixed(2) + 'h';
+            document.getElementById('sam-total').innerText = formatDuration(item.samsara.totalVehicleHours) + ' (' + item.samsara.totalVehicleHours.toFixed(2) + 'h)';
 
 
 
@@ -1475,7 +1493,9 @@
 
             // Re-render timeline with current item
             const currentName = document.getElementById('detail-name').innerText;
-            const currentDate = document.getElementById('detail-date').innerText;
+            const displayedDate = document.getElementById('detail-date').innerText;
+            // Convert back to YYYY-MM-DD for comparison
+            const currentDate = displayedDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$1-$2');
             const currentItem = appData.discrepancies.find(d =>
                 d.employeeName === currentName && d.date === currentDate
             );
@@ -1488,7 +1508,9 @@
 
             // Re-render timeline with current item
             const currentName = document.getElementById('detail-name').innerText;
-            const currentDate = document.getElementById('detail-date').innerText;
+            const displayedDate = document.getElementById('detail-date').innerText;
+            // Convert back to YYYY-MM-DD for comparison
+            const currentDate = displayedDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$1-$2');
             const currentItem = appData.discrepancies.find(d =>
                 d.employeeName === currentName && d.date === currentDate
             );
@@ -1630,9 +1652,9 @@
 
                 el.innerHTML = `
 
-                        <div class="font-bold truncate">${act.jobNumber || 'Non-Job'}</div>
+                        <div class="font-bold truncate">${act.activityType}</div>
 
-                        <div class="text-[9px] opacity-70 truncate">${act.activityType}</div>
+                        <div class="text-[9px] opacity-70 truncate">${act.jobNumber || 'Non-Job'}</div>
 
                     `;
 
@@ -1641,7 +1663,7 @@
                 const tooltipText = `<div class="font-bold border-b border-white/10 pb-1 mb-1">${act.activityType}</div>
                                      <div class="space-y-0.5">
                                         <div><span class="text-slate-400">Range:</span> ${formatTimeDisplay(act.startTime)} - ${formatTimeDisplay(act.endTime)}</div>
-                                        <div><span class="text-slate-400">Dur:</span> ${act.duration.toFixed(2)}h</div>
+                                        <div><span class="text-slate-400">Dur:</span> ${formatDuration(act.duration)} (${act.duration.toFixed(2)}h)</div>
                                         <div><span class="text-slate-400">Job:</span> ${act.jobNumber || 'N/A'}</div>
                                      </div>`;
 
@@ -1752,18 +1774,32 @@
                         ? '<i class="fa-solid fa-wrench"></i>'
                         : '<i class="fa-solid fa-clock"></i>';
 
+                    // Determine label based on gap characteristics
+                    let gapLabel, gapTooltipTitle;
+                    if (gap.isPotentialWork) {
+                        gapLabel = 'Unexplained Stop';
+                        gapTooltipTitle = 'UNEXPLAINED STOP';
+                    } else if (gap.duration >= 2.0) {
+                        gapLabel = 'Verified Work';
+                        gapTooltipTitle = 'VERIFIED WORK PERIOD';
+                    } else {
+                        gapLabel = 'Brief Stop';
+                        gapTooltipTitle = 'BRIEF STOP';
+                    }
+
                     el.innerHTML = `
 
-                            <div class="font-bold truncate flex items-center gap-2">${icon} ${gap.isPotentialWork ? 'Potential Work' : 'Gap'}</div>
+                            <div class="font-bold truncate flex items-center gap-2">${icon} ${gapLabel}</div>
 
-                            <div class="text-[9px] opacity-70 truncate">${gap.duration.toFixed(1)}h at ${gap.location}</div>
+                            <div class="text-[9px] opacity-70 truncate">${formatDuration(gap.duration)} at ${gap.location}</div>
 
                         `;
-                    const tooltipText3 = `<div class="font-bold border-b border-white/10 pb-1 mb-1">${gap.isPotentialWork ? 'POTENTIAL WORK' : 'GAP'}</div>
+                    const tooltipText3 = `<div class="font-bold border-b border-white/10 pb-1 mb-1">${gapTooltipTitle}</div>
                                           <div class="space-y-0.5">
                                             <div><span class="text-slate-400">Range:</span> ${formatTimeDisplay(gap.startTime)} - ${formatTimeDisplay(gap.endTime)}</div>
-                                            <div><span class="text-slate-400">Dur:</span> ${gap.duration.toFixed(2)}h</div>
+                                            <div><span class="text-slate-400">Dur:</span> ${formatDuration(gap.duration)} (${gap.duration.toFixed(2)}h)</div>
                                             <div class="text-[10px] text-slate-500 mt-1">${gap.location}</div>
+                                            ${!gap.isPotentialWork && gap.duration >= 2.0 ? '<div class="text-[10px] text-green-400 mt-1"><i class="fa-solid fa-check-circle"></i> Matches claimed onsite work</div>' : ''}
                                           </div>`;
 
                     el.dataset.h = height;
@@ -1814,6 +1850,42 @@
             return timeStr;
         }
 
+        // Helper: Convert decimal hours to readable format (e.g., "2h 30m")
+        function formatDuration(decimalHours) {
+            if (decimalHours == null || isNaN(decimalHours)) return '0h 0m';
+
+            // Round to nearest minute (1/60th of an hour = 0.0167)
+            const totalMinutes = Math.round(decimalHours * 60);
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+
+            if (hours === 0) {
+                return `${minutes}m`;
+            } else if (minutes === 0) {
+                return `${hours}h`;
+            } else {
+                return `${hours}h ${minutes}m`;
+            }
+        }
+
+        // Helper: Format duration with both decimal and readable format
+        function formatDurationBoth(decimalHours) {
+            const readable = formatDuration(decimalHours);
+            const decimal = decimalHours.toFixed(2);
+            return `${readable} (${decimal}h)`;
+        }
+
+        // Helper: Format date to American MM/DD/YYYY format
+        function formatDateAmerican(dateStr) {
+            if (!dateStr) return '';
+            // Handle YYYY-MM-DD format
+            const match = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+            if (match) {
+                const [_, year, month, day] = match;
+                return `${month}/${day}/${year}`;
+            }
+            return dateStr;
+        }
 
 
         // --- LIST RENDERER ---
@@ -1852,15 +1924,15 @@
 
                         <div class="flex-1 min-w-0">
 
-                            <div class="font-bold text-blue-200 text-sm truncate">${act.jobNumber || 'Non-Job'}</div>
+                            <div class="font-bold text-blue-200 text-sm truncate">${act.activityType}</div>
 
-                            <div class="text-xs text-slate-400 truncate">${act.activityType}</div>
+                            <div class="text-xs text-slate-400 truncate">${act.jobNumber || 'Non-Job'}</div>
 
                             <div class="text-[10px] text-slate-500 mt-1">${act.customer || ''}</div>
 
                         </div>
 
-                        <div class="text-xs font-mono text-slate-400">${act.duration.toFixed(2)}h</div>
+                        <div class="text-xs font-mono text-slate-400">${formatDuration(act.duration)}</div>
 
                     `;
 
@@ -1924,7 +1996,7 @@
                         ${trip.flagged ? `<div class="text-[10px] text-red-400 mt-1 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> ${trip.note}</div>` : ''}
                     </div>
                     <div class="text-right">
-                        <div class="text-xs font-mono text-slate-400">${trip.duration.toFixed(2)}h</div>
+                        <div class="text-xs font-mono text-slate-400">${formatDuration(trip.duration)}</div>
                         <div class="text-[10px] text-slate-500">${trip.distance} mi</div>
                     </div>
                 `;
@@ -1934,6 +2006,22 @@
                     const el = document.createElement('div');
                     const isPotentialWork = gap.isPotentialWork;
                     el.className = `p-3 rounded border flex gap-3 transition ${isPotentialWork ? 'bg-amber-500/10 border-amber-500/30 border-dashed' : 'bg-slate-700/10 border-slate-600/20 border-dashed'}`;
+                    // Determine label and styling based on gap characteristics
+                    let gapLabel, gapIcon, gapNote;
+                    if (isPotentialWork) {
+                        gapLabel = 'Unexplained Stop';
+                        gapIcon = 'fa-triangle-exclamation';
+                        gapNote = '<div class="text-[10px] text-amber-400 mt-1 font-bold"><i class="fa-solid fa-info-circle"></i> No matching work activity found</div>';
+                    } else if (gap.duration >= 2.0) {
+                        gapLabel = 'Verified Work Period';
+                        gapIcon = 'fa-check-circle';
+                        gapNote = '<div class="text-[10px] text-green-400 mt-1 font-bold"><i class="fa-solid fa-check"></i> Matches claimed onsite work</div>';
+                    } else {
+                        gapLabel = 'Brief Stop';
+                        gapIcon = 'fa-clock';
+                        gapNote = '';
+                    }
+
                     el.innerHTML = `
                     <div class="w-16 text-[10px] font-mono text-slate-500 pt-1 shrink-0 text-right">
                         <div>${formatTimeDisplay(gap.startTime)}</div>
@@ -1941,15 +2029,15 @@
                         <div>${formatTimeDisplay(gap.endTime)}</div>
                     </div>
                     <div class="flex-1 min-w-0 flex flex-col justify-center">
-                        <div class="text-[11px] font-semibold ${isPotentialWork ? 'text-amber-300' : 'text-slate-400'} flex items-center gap-2">
-                            <i class="fa-solid ${isPotentialWork ? 'fa-wrench' : 'fa-clock'} text-[8px]"></i>
-                            <span class="truncate">${isPotentialWork ? 'Potential Work Period' : 'Gap Between Trips'}</span>
+                        <div class="text-[11px] font-semibold ${isPotentialWork ? 'text-amber-300' : gap.duration >= 2.0 ? 'text-green-400' : 'text-slate-400'} flex items-center gap-2">
+                            <i class="fa-solid ${gapIcon} text-[8px]"></i>
+                            <span class="truncate">${gapLabel}</span>
                         </div>
                         <div class="text-[10px] text-slate-500 mt-1">Parked at ${gap.location}</div>
-                        ${isPotentialWork ? '<div class="text-[10px] text-amber-400 mt-1 font-bold"><i class="fa-solid fa-info-circle"></i> Check timesheet for work entries</div>' : ''}
+                        ${gapNote}
                     </div>
                     <div class="text-right">
-                        <div class="text-xs font-mono ${isPotentialWork ? 'text-amber-300' : 'text-slate-400'}">${gap.duration.toFixed(2)}h</div>
+                        <div class="text-xs font-mono ${isPotentialWork ? 'text-amber-300' : gap.duration >= 2.0 ? 'text-green-400' : 'text-slate-400'}">${formatDuration(gap.duration)}</div>
                     </div>
                 `;
                     listSam.appendChild(el);
