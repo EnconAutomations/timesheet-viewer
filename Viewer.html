@@ -438,15 +438,17 @@
 
         <div id="view-switcher" class="hidden bg-slate-800/50 p-1 rounded-lg border border-white/5">
 
-            <button onclick="switchView('calendar')" id="btn-view-calendar"
-                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white">
 
-                <i class="fa-regular fa-calendar mr-2"></i>Calendar
+
+            <button onclick="switchView('weekly')" id="btn-view-weekly"
+                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm">
+
+                <i class="fa-solid fa-table-cells mr-2"></i>Weekly
 
             </button>
 
             <button onclick="switchView('list')" id="btn-view-list"
-                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm">
+                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white">
 
                 <i class="fa-solid fa-list-ul mr-2"></i>List & Detail
 
@@ -529,89 +531,121 @@
 
 
 
-        <!-- CALENDAR VIEW -->
-
+        <!-- PRESERVED: Original Calendar View (kept for future use) -->
+        <!-- Uncomment this section to restore calendar view functionality -->
+        <!--
         <div id="view-calendar" class="absolute inset-0 p-8 overflow-y-auto hidden z-10 bg-[#0f172a]">
-
             <div class="max-w-6xl mx-auto">
-
                 <div class="flex justify-between items-end mb-8">
-
                     <div>
-
                         <div class="flex items-center gap-4 mb-2">
-
                             <button onclick="changeMonth(-1)"
                                 class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-
                                 <i class="fa-solid fa-chevron-left"></i>
-
                             </button>
-
                             <h2 class="text-3xl font-bold text-white" id="calendar-month-title">October 2025</h2>
-
                             <button onclick="changeMonth(1)"
                                 class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-
                                 <i class="fa-solid fa-chevron-right"></i>
-
                             </button>
-
                         </div>
-
                         <p class="text-slate-400">Overview of discrepancies by date</p>
-
                     </div>
-
                     <div class="flex gap-2">
-
-                        <div
-                            class="px-3 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium">
-
+                        <div class="px-3 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium">
                             High Severity</div>
-
-                        <div
-                            class="px-3 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium">
-
+                        <div class="px-3 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium">
                             Medium Severity</div>
-
                     </div>
+                </div>
+                <div class="glass-panel rounded-2xl p-6">
+                    <div class="grid grid-cols-7 gap-8 mb-4 text-slate-500 text-sm font-medium uppercase tracking-wider text-center">
+                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                </div>
+            </div>
+        </div>
+        -->
 
+        <!-- WEEKLY MANAGER VIEW -->
+        <div id="view-weekly" class="absolute inset-0 p-8 overflow-y-auto z-10 bg-[#0f172a]">
+            <div class="max-w-7xl mx-auto space-y-6">
+
+                <!-- Week Navigation Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <div class="flex items-center gap-4 mb-2">
+                            <button onclick="changeWeek(-1)"
+                                class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition border border-white/10">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <h2 class="text-3xl font-bold text-white" id="week-title">--</h2>
+                            <button onclick="changeWeek(1)"
+                                class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition border border-white/10">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                            <button onclick="goToCurrentWeek()"
+                                class="px-4 py-2 rounded-lg bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 hover:text-primary-300 text-sm font-medium transition border border-primary-500/30">
+                                <i class="fa-solid fa-calendar-day mr-2"></i>Today
+                            </button>
+                        </div>
+                        <p class="text-slate-400">High severity discrepancies by technician</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-slate-500 text-xs uppercase tracking-wider mb-1">Week Totals</div>
+                        <div class="flex gap-3">
+                            <div class="px-3 py-1 rounded bg-red-500/10 border border-red-500/20">
+                                <span class="text-red-400 text-xl font-bold font-mono" id="week-high-total">0</span>
+                                <span class="text-red-400/70 text-xs ml-1">High</span>
+                            </div>
+                            <div class="px-3 py-1 rounded bg-amber-500/10 border border-amber-500/20">
+                                <span class="text-amber-400 text-xl font-bold font-mono" id="week-med-total">0</span>
+                                <span class="text-amber-400/70 text-xs ml-1">Med</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-
-
+                <!-- Weekly Grid -->
                 <div class="glass-panel rounded-2xl p-6">
-
-                    <div
-                        class="grid grid-cols-7 gap-8 mb-4 text-slate-500 text-sm font-medium uppercase tracking-wider text-center">
-
-                        <div>Sun</div>
-
-                        <div>Mon</div>
-
-                        <div>Tue</div>
-
-                        <div>Wed</div>
-
-                        <div>Thu</div>
-
-                        <div>Fri</div>
-
-                        <div>Sat</div>
-
+                    <div id="weekly-grid">
+                        <!-- Grid will be populated by JavaScript -->
                     </div>
+                </div>
 
-                    <div id="calendar-grid" class="calendar-grid">
-
-                        <!-- Calendar Days Injected Here -->
-
+                <!-- Technician Summary Table -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-bar text-primary-400"></i>
+                        Technician Summary
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full" id="tech-summary-table">
+                            <thead>
+                                <tr class="border-b border-white/10">
+                                    <th
+                                        class="text-left py-3 px-4 text-slate-400 text-xs font-medium uppercase tracking-wider">
+                                        Technician</th>
+                                    <th
+                                        class="text-center py-3 px-4 text-slate-400 text-xs font-medium uppercase tracking-wider">
+                                        High</th>
+                                    <th
+                                        class="text-center py-3 px-4 text-slate-400 text-xs font-medium uppercase tracking-wider">
+                                        Medium</th>
+                                    <th
+                                        class="text-center py-3 px-4 text-slate-400 text-xs font-medium uppercase tracking-wider">
+                                        Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tech-summary-body">
+                                <!-- Rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
-
                 </div>
 
             </div>
-
         </div>
 
 
@@ -630,11 +664,20 @@
                 <div class="p-4 border-b border-white/5 space-y-4">
 
                     <!-- Header Row -->
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Employees</label>
-                        <button onclick="toggleSidebar()" class="text-slate-500 hover:text-white transition"
-                            title="Hide Sidebar">
-                            <i class="fa-solid fa-chevron-left"></i>
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-white tracking-tight">Discrepancies</h2>
+                            <p class="text-xs text-slate-400 font-medium mt-1"><span id="record-count"
+                                    class="text-white">0</span>
+                                records found</p>
+                        </div>
+                        <button onclick="exportToCSV()"
+                            class="p-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition border border-white/5"
+                            title="Export Filtered CSV">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                        <button onclick="toggleSidebar()" class="lg:hidden text-white">
+                            <i class="fa-solid fa-xmark text-xl"></i>
                         </button>
                     </div>
 
@@ -661,7 +704,7 @@
 
                             <option value="ALL">All Severities</option>
 
-                            <option value="HIGH">High Only</option>
+                            <option value="HIGH" selected>High Only</option>
 
                             <option value="MEDIUM">Medium Only</option>
 
@@ -723,17 +766,14 @@
 
                 <!-- Empty State -->
 
-                <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-500">
-
+                <!-- Empty State -->
+                <div id="empty-state"
+                    class="flex-1 flex flex-col items-center justify-center text-slate-500 h-full min-h-[400px]">
                     <div
                         class="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 border border-white/5">
-
                         <i class="fa-regular fa-hand-point-left text-3xl opacity-50"></i>
-
                     </div>
-
                     <p class="text-lg font-light">Select an employee to investigate</p>
-
                 </div>
 
 
@@ -859,6 +899,19 @@
                             <span class="text-blue-400">ServiceTitan (Left)</span>
                             <span class="text-emerald-400">Samsara Trips (Right)</span>
                             <span class="text-amber-400">⚠ Potential Work</span>
+                            <div class="px-4 border-l border-white/10 ml-4 flex items-center gap-1">
+                                <button onclick="switchTimelineView('vertical')" id="btn-tl-vertical"
+                                    class="px-2 py-1 rounded bg-slate-700 text-white text-xs border border-white/10 transition"
+                                    title="Vertical View">
+                                    <i class="fa-solid fa-arrows-up-down"></i>
+                                </button>
+                                <button onclick="switchTimelineView('horizontal')" id="btn-tl-horizontal"
+                                    class="px-2 py-1 rounded bg-slate-800 text-slate-400 text-xs border border-white/10 hover:text-white transition"
+                                    title="Horizontal View">
+                                    <i class="fa-solid fa-arrows-left-right"></i>
+                                </button>
+                            </div>
+
                             <!-- Zoom controls -->
                             <div class="flex items-center gap-1 ml-4 border-l border-white/10 pl-4">
                                 <button onclick="changeZoom(-0.5)"
@@ -882,28 +935,32 @@
                         </div>
                     </div>
 
+                    <!-- TIMELINE CONTAINER WRAPPER -->
+                    <div class="relative min-h-[400px]">
 
+                        <!-- Vertical View -->
+                        <div id="timeline-view-vertical">
+                            <div class="v-timeline-container" id="timeline-scroll-area">
+                                <div class="v-timeline-grid" id="v-timeline-grid">
+                                    <!-- Left Column: ServiceTitan -->
+                                    <div class="v-event-col" id="col-st"></div>
 
-                    <div class="v-timeline-container" id="timeline-scroll-area">
+                                    <!-- Center: Time Axis -->
+                                    <div class="v-time-axis" id="col-axis"></div>
 
-                        <div class="v-timeline-grid" id="v-timeline-grid">
+                                    <!-- Right Column: Samsara -->
+                                    <div class="v-event-col" id="col-sam"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                            <!-- Left Column: ServiceTitan -->
-
-                            <div class="v-event-col" id="col-st"></div>
-
-
-
-                            <!-- Center: Time Axis -->
-
-                            <div class="v-time-axis" id="col-axis"></div>
-
-
-
-                            <!-- Right Column: Samsara -->
-
-                            <div class="v-event-col" id="col-sam"></div>
-
+                        <!-- Horizontal View -->
+                        <div id="timeline-view-horizontal"
+                            class="hidden overflow-x-auto border border-white/10 rounded-lg bg-slate-900/50">
+                            <!-- Horizontal content injected by JS -->
+                            <div id="h-timeline-container" class="relative items-center">
+                                <!-- Axes and Events go here -->
+                            </div>
                         </div>
 
                     </div>
@@ -970,17 +1027,19 @@
 
         // --- STATE ---
 
-        let appData = { discrepancies: [] };
+        let appData = null;
 
         let groupedData = {}; // { "YYYY-MM-DD": [items] }
 
-        let currentView = 'list'; // 'list' or 'calendar'
-
-        let currentFilter = { search: '', severity: 'ALL', flag: 'ALL' };
-
         let calendarDate = new Date(); // Current month being viewed
 
-        let timelineZoom = 1.0; // Timeline zoom level (0.5x to 3.0x)
+        let currentView = 'weekly'; // Default to weekly view
+
+        let currentFilter = { search: '', severity: 'HIGH', flag: 'ALL', sort: 'SEVERITY' };
+
+        let timelineZoom = 1.0; // Zoom factor for timeline (0.5x to 3.0x)
+
+        let currentWeekStart = null; // Current week start date for weekly view
 
 
 
@@ -1024,6 +1083,15 @@
 
 
 
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('detail-view').classList.contains('hidden')) return;
+
+            if (e.key === 'Escape' || e.key === 'ArrowLeft') {
+                closeDetail();
+            }
+        });
+
         function handleFiles(files) {
 
             if (files.length === 0) return;
@@ -1032,24 +1100,24 @@
 
             reader.onload = (e) => {
 
+                let json;
                 try {
-
-                    const json = JSON.parse(e.target.result);
-
-                    loadData(json);
-
+                    json = JSON.parse(e.target.result);
                 } catch (err) {
-
-                    alert('Invalid JSON file.');
-
-                    console.error(err);
-
+                    console.error('Error parsing JSON:', err);
+                    alert('Invalid JSON file. Please ensure you are uploading a valid JSON report file.');
+                    return;
                 }
 
+                try {
+                    loadData(json);
+                } catch (err) {
+                    console.error('Error loading data:', err);
+                    alert('Error loading data. See console for details: ' + err.message);
+                }
             };
 
             reader.readAsText(files[0]);
-
         }
 
 
@@ -1074,13 +1142,17 @@
 
 
 
-            document.getElementById('upload-screen').classList.add('hidden');
+            const uploadScreen = document.getElementById('upload-screen');
+            if (uploadScreen) uploadScreen.classList.add('hidden');
 
-            document.getElementById('main-content').classList.remove('hidden');
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) mainContent.classList.remove('hidden');
 
-            document.getElementById('view-switcher').classList.remove('hidden');
-
-            document.getElementById('view-switcher').classList.add('flex');
+            const viewSwitcher = document.getElementById('view-switcher');
+            if (viewSwitcher) {
+                viewSwitcher.classList.remove('hidden');
+                viewSwitcher.classList.add('flex');
+            }
 
 
 
@@ -1088,30 +1160,37 @@
 
 
 
-            // Default to Calendar view if data spans multiple days, else List
+            // Initialize weekly view with first data date
 
             const dates = Object.keys(groupedData).sort();
 
             if (dates.length > 0) {
+                // Sort dates to ensure order
+                dates.sort();
 
-                // Set calendar to first month with data
+                // Helper to parse YYYY-MM-DD to Local Midnight Date
+                const parseLocal = (s) => {
+                    const [y, m, d] = s.split('-').map(Number);
+                    return new Date(y, m - 1, d);
+                };
 
-                calendarDate = new Date(dates[0]);
+                // Set week to LAST date with data (most recent)
+                const lastDateStr = dates[dates.length - 1];
+                const lastDate = parseLocal(lastDateStr);
 
-                // Adjust to first day of that month to avoid timezone/overflow issues
+                const dayOfWeek = lastDate.getDay();
+                const diff = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek; // Adjust to Monday
 
+                currentWeekStart = new Date(lastDate);
+                currentWeekStart.setDate(lastDate.getDate() + diff);
+
+                // For calendar, also default to the month of the last date
+                calendarDate = new Date(lastDate);
                 calendarDate.setDate(1);
-
-                renderCalendar();
-
             }
 
-
-
-            if (dates.length > 1) switchView('calendar');
-
-            else switchView('list');
-
+            // Default to weekly view
+            switchView('weekly');
         }
 
 
@@ -1124,49 +1203,334 @@
 
 
 
-        function switchView(view) {
+        function switchView(view, pushState = true) {
 
             currentView = view;
+            if (pushState) updateHistory(view);
 
-            const calBtn = document.getElementById('btn-view-calendar');
-
+            const weeklyBtn = document.getElementById('btn-view-weekly');
             const listBtn = document.getElementById('btn-view-list');
 
             const calView = document.getElementById('view-calendar');
-
+            const weeklyView = document.getElementById('view-weekly');
             const listView = document.getElementById('view-list');
 
+            // Reset all buttons to inactive state
+            const inactiveClass = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
+            const activeClass = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
 
+            if (weeklyBtn) weeklyBtn.className = inactiveClass;
+            if (listBtn) listBtn.className = inactiveClass;
 
-            if (view === 'calendar') {
+            // Hide all views
+            if (calView) calView.classList.add('hidden');
+            if (weeklyView) weeklyView.classList.add('hidden');
+            if (listView) listView.classList.add('hidden');
 
-                calBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
-
-                listBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
-
-                calView.classList.remove('hidden');
-
-                listView.classList.add('hidden');
-
-                // Re-render to ensure correct size/layout if needed
-
-                renderCalendar();
-
+            // Show selected view and activate its button
+            if (view === 'weekly') {
+                if (weeklyBtn) weeklyBtn.className = activeClass;
+                if (weeklyView) {
+                    weeklyView.classList.remove('hidden');
+                    renderWeekView();
+                }
             } else {
-
-                listBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all bg-slate-700 text-white shadow-sm";
-
-                calBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white";
-
-                listView.classList.remove('hidden');
-
-                calView.classList.add('hidden');
-
+                if (listBtn) listBtn.className = activeClass;
+                if (listView) listView.classList.remove('hidden');
             }
 
         }
 
 
+
+
+        // --- WEEKLY VIEW LOGIC ---
+
+        function changeWeek(offset) {
+            if (!currentWeekStart) return;
+            currentWeekStart.setDate(currentWeekStart.getDate() + (offset * 7));
+            renderWeekView();
+        }
+
+        function goToCurrentWeek() {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
+            currentWeekStart = new Date(today);
+            currentWeekStart.setDate(today.getDate() + diff);
+            renderWeekView();
+        }
+
+        function formatDateYMD(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function aggregateWeekData() {
+            if (!currentWeekStart || !appData || !appData.discrepancies) {
+                return { weekData: {}, weekDates: [], techNames: [] };
+            }
+
+            const weekData = {};
+            const weekDates = [];
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(currentWeekStart);
+                date.setDate(currentWeekStart.getDate() + i);
+                weekDates.push(formatDateYMD(date));
+            }
+
+            appData.discrepancies.forEach(item => {
+                if (!weekDates.includes(item.date)) return;
+
+                if (!weekData[item.employeeName]) {
+                    weekData[item.employeeName] = {};
+                    weekDates.forEach(d => {
+                        weekData[item.employeeName][d] = { HIGH: 0, MEDIUM: 0 };
+                    });
+                }
+
+                const severity = item.severity === 'HIGH' ? 'HIGH' : 'MEDIUM';
+                weekData[item.employeeName][item.date][severity]++;
+            });
+
+            const techNames = Object.keys(weekData).sort();
+
+            return { weekData, weekDates, techNames };
+        }
+
+        function renderWeekView() {
+            if (!currentWeekStart) return;
+
+            const { weekData, weekDates, techNames: allTechNames } = aggregateWeekData();
+
+            // Filter to show only techs with HIGH severity items this week
+            const techNames = allTechNames.filter(tech => {
+                let hasHigh = false;
+                weekDates.forEach(d => {
+                    if (weekData[tech][d].HIGH > 0) hasHigh = true;
+                });
+                return hasHigh;
+            });
+
+            const startDate = new Date(currentWeekStart);
+            const endDate = new Date(currentWeekStart);
+            endDate.setDate(startDate.getDate() + 6);
+            const titleStr = `Week of ${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+            document.getElementById('week-title').innerText = titleStr;
+
+            let weekHighTotal = 0;
+            let weekMedTotal = 0;
+            techNames.forEach(tech => {
+                weekDates.forEach(date => {
+                    weekHighTotal += weekData[tech][date].HIGH;
+                    weekMedTotal += weekData[tech][date].MEDIUM;
+                });
+            });
+            document.getElementById('week-high-total').innerText = weekHighTotal;
+            document.getElementById('week-med-total').innerText = weekMedTotal;
+
+            const gridContainer = document.getElementById('weekly-grid');
+            gridContainer.innerHTML = '';
+
+            if (techNames.length === 0) {
+                gridContainer.innerHTML = `
+                    <div class="text-center py-12 text-slate-500">
+                        <i class="fa-solid fa-calendar-xmark text-4xl mb-4 opacity-50"></i>
+                        <p class="text-lg">No discrepancies for this week</p>
+                    </div>
+                `;
+                renderTechSummaryTable({}, []);
+                return;
+            }
+
+            let gridHTML = '<div class="overflow-x-auto">';
+            gridHTML += '<table class="w-full border-collapse">';
+
+            gridHTML += '<thead><tr class="border-b border-white/10">';
+            gridHTML += '<th class="text-left py-3 px-4 text-slate-400 text-xs font-medium uppercase tracking-wider sticky left-0 bg-slate-800/50 backdrop-blur z-10">Technician</th>';
+            const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            weekDates.forEach((dateStr, idx) => {
+                const date = new Date(dateStr);
+                const dayName = dayNames[idx];
+                const monthDay = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
+                gridHTML += `<th class="text-center py-3 px-4 min-w-[80px]">
+                    <div class="text-slate-400 text-xs font-medium uppercase tracking-wider">${dayName}</div>
+                    <div class="text-slate-500 text-[10px] mt-0.5">${monthDay}</div>
+                </th>`;
+            });
+            gridHTML += '</tr></thead>';
+
+            gridHTML += '<tbody>';
+            techNames.forEach(techName => {
+                gridHTML += '<tr class="border-b border-white/5 hover:bg-white/[0.02] transition">';
+                gridHTML += `<td class="py-3 px-4 font-medium text-slate-200 sticky left-0 bg-slate-800/70 backdrop-blur z-10">${techName}</td>`;
+
+                weekDates.forEach(dateStr => {
+                    const high = weekData[techName][dateStr].HIGH;
+                    const med = weekData[techName][dateStr].MEDIUM;
+                    const total = high + med;
+
+                    let bgClass, textClass, borderClass;
+                    if (high === 0) {
+                        bgClass = 'bg-slate-800/20';
+                        textClass = 'text-slate-600';
+                        borderClass = 'border-slate-700/30';
+                    } else {
+                        bgClass = 'bg-red-500/20 hover:bg-red-500/30';
+                        textClass = 'text-red-400';
+                        borderClass = 'border-red-500/30';
+                    }
+
+                    const clickable = total > 0 ? 'cursor-pointer' : '';
+                    const onclick = total > 0 ? `onclick="openWeekCell('${techName}', '${dateStr}')"` : '';
+
+                    gridHTML += `<td class="text-center py-3 px-4">
+                        <div class="${bgClass} ${clickable} py-2 px-3 rounded-lg border ${borderClass} transition-all" ${onclick}>
+                            <div class="${textClass} text-lg font-bold font-mono">${high}</div>
+                            ${med > 0 ? `<div class="text-slate-500 text-[10px] mt-0.5">+${med} med</div>` : ''}
+                        </div>
+                    </td>`;
+                });
+
+                gridHTML += '</tr>';
+            });
+            gridHTML += '</tbody></table></div>';
+
+            gridContainer.innerHTML = gridHTML;
+
+            renderTechSummaryTable(weekData, techNames);
+        }
+
+        function renderTechSummaryTable(weekData, techNames) {
+            const tbody = document.getElementById('tech-summary-body');
+            tbody.innerHTML = '';
+
+            if (techNames.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-slate-500">No data for this week</td></tr>';
+                return;
+            }
+
+            const techTotals = techNames.map(techName => {
+                let high = 0, med = 0;
+                Object.values(weekData[techName]).forEach(counts => {
+                    high += counts.HIGH;
+                    med += counts.MEDIUM;
+                });
+                return { name: techName, high, med, total: high + med };
+            }).filter(t => t.high > 0);
+
+            techTotals.sort((a, b) => b.high - a.high || a.name.localeCompare(b.name));
+
+            techTotals.forEach(tech => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-white/5 hover:bg-white/[0.02] transition cursor-pointer';
+                row.onclick = () => openTechSummary(tech.name);
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 text-slate-200 font-medium">${tech.name}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-block px-2 py-1 rounded ${tech.high > 0 ? 'bg-red-500/10 text-red-400' : 'text-slate-600'} font-mono font-bold">
+                            ${tech.high}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-block px-2 py-1 rounded ${tech.med > 0 ? 'bg-amber-500/10 text-amber-400' : 'text-slate-600'} font-mono">
+                            ${tech.med}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center text-slate-300 font-mono font-bold">${tech.total}</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function openWeekCell(techName, dateStr) {
+            currentFilter.search = techName;
+            currentFilter.severity = 'ALL';
+            document.getElementById('search-input').value = techName;
+            document.getElementById('severity-filter').value = 'ALL';
+            renderSidebar();
+            switchView('list');
+
+            const firstHigh = appData.discrepancies.find(i =>
+                i.employeeName === techName && i.date === dateStr && i.severity === 'HIGH'
+            );
+            const firstAny = appData.discrepancies.find(i =>
+                i.employeeName === techName && i.date === dateStr
+            );
+            const item = firstHigh || firstAny;
+            if (item) loadDetail(item);
+        }
+
+        // --- HISTORY & NAVIGATION SUPPORT ---
+
+        window.addEventListener('popstate', (event) => {
+            const state = event.state;
+            if (!state) {
+                // If no state, default to initial view (likely weekly)
+                closeDetail(false);
+                switchView('weekly', false);
+                return;
+            }
+
+            if (state.view === 'detail' && state.itemId) {
+                // Determine source for detail lookup (search all discrepancies)
+                const item = appData.discrepancies.find(i =>
+                    (i.employeeName + '_' + i.date) === state.itemId
+                );
+                if (item) {
+                    loadDetail(item, false);
+                } else {
+                    console.warn('History item not found:', state.itemId);
+                    closeDetail(false);
+                }
+            } else {
+                closeDetail(false);
+                if (state.view) switchView(state.view, false);
+            }
+        });
+
+        function updateHistory(view, itemId = null) {
+            const url = new URL(window.location);
+            url.searchParams.set('view', view);
+            if (itemId) {
+                url.searchParams.set('id', itemId);
+            } else {
+                url.searchParams.delete('id');
+            }
+
+            const state = { view, itemId };
+            window.history.pushState(state, '', url);
+        }
+
+        function closeDetail(updateHistoryState = true) {
+            document.getElementById('detail-view').classList.add('hidden');
+            const emptyState = document.getElementById('empty-state');
+            if (emptyState) emptyState.classList.remove('hidden');
+
+            if (updateHistoryState) {
+                // When closing detail, we go back to the current main view
+                updateHistory(currentView);
+            }
+        }
+
+        function openTechSummary(techName) {
+            currentFilter.search = techName;
+            currentFilter.severity = 'ALL';
+            currentFilter.flag = 'ALL';
+            document.getElementById('search-input').value = techName;
+            document.getElementById('severity-filter').value = 'ALL';
+            document.getElementById('flag-filter').value = 'ALL';
+            renderSidebar();
+            switchView('list');
+
+            const firstItem = appData.discrepancies.find(i => i.employeeName === techName);
+            if (firstItem) loadDetail(firstItem);
+        }
 
         // --- CALENDAR LOGIC ---
 
@@ -1426,7 +1790,15 @@
 
         // --- DETAIL VIEW ---
 
-        function loadDetail(item) {
+        // --- DETAIL VIEW ---
+
+        function loadDetail(item, pushState = true) {
+
+            if (pushState) {
+                // Unique ID for URL/History
+                const uniqueId = item.employeeName + '_' + item.date;
+                updateHistory('detail', uniqueId);
+            }
 
             document.getElementById('empty-state').classList.add('hidden');
 
@@ -1519,9 +1891,260 @@
 
 
 
-        // --- VERTICAL TIMELINE RENDERER ---
+        // --- ADVANCED TIMELINE RENDERER ---
+
+        let timelineMode = 'vertical'; // 'vertical' or 'horizontal'
+
+        function switchTimelineView(mode) {
+            timelineMode = mode;
+
+            // UI Toggle
+            const vBtn = document.getElementById('btn-tl-vertical');
+            const hBtn = document.getElementById('btn-tl-horizontal');
+
+            if (mode === 'vertical') {
+                vBtn.className = "px-2 py-1 rounded bg-slate-700 text-white text-xs border border-white/10 transition shadow-sm";
+                hBtn.className = "px-2 py-1 rounded bg-slate-800 text-slate-400 text-xs border border-white/10 hover:text-white transition";
+
+                document.getElementById('timeline-view-vertical').classList.remove('hidden');
+                document.getElementById('timeline-view-horizontal').classList.add('hidden');
+            } else {
+                vBtn.className = "px-2 py-1 rounded bg-slate-800 text-slate-400 text-xs border border-white/10 hover:text-white transition";
+                hBtn.className = "px-2 py-1 rounded bg-slate-700 text-white text-xs border border-white/10 transition shadow-sm";
+
+                document.getElementById('timeline-view-vertical').classList.add('hidden');
+                document.getElementById('timeline-view-horizontal').classList.remove('hidden');
+            }
+
+            // Trigger re-render of current item to populate the new view
+            const currentName = document.getElementById('detail-name').innerText;
+            const displayedDate = document.getElementById('detail-date').innerText;
+            const currentDate = displayedDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$1-$2');
+            const currentItem = appData.discrepancies.find(d =>
+                d.employeeName === currentName && d.date === currentDate
+            );
+
+            if (currentItem) {
+                if (mode === 'horizontal') renderHorizontalTimeline(currentItem);
+                else renderVerticalTimeline(currentItem);
+            }
+        }
 
         function renderTimeline(item) {
+            // Dispatcher
+            if (timelineMode === 'horizontal') {
+                renderHorizontalTimeline(item);
+            } else {
+                renderVerticalTimeline(item);
+            }
+        }
+
+        // --- HORIZONTAL GANTT (UX POLISHED) ---
+        function renderHorizontalTimeline(item) {
+            const container = document.getElementById('h-timeline-container');
+            container.innerHTML = '';
+
+            // Remove previous fixed sizing styles from the container wrapper if any
+            const wrapper = document.getElementById('timeline-view-horizontal');
+            // Ensure we don't accidentally hide it if it's supposed to be shown
+            const isHidden = wrapper.classList.contains('hidden');
+            wrapper.className = `border border-white/10 rounded-lg bg-slate-900/50 flex flex-col h-[320px] ${isHidden ? 'hidden' : ''}`;
+            // We set height fixed or max-height to ensure scrolling works
+
+            // Reset inner container to standard block
+            container.className = "relative flex-1 overflow-auto custom-scrollbar";
+            container.style.width = '100%';
+            container.style.height = '100%';
+
+            const pxPerMin = 2 * timelineZoom;
+            const startHour = 4; // 4 AM
+            const endHour = 22;  // 10 PM
+            const totalMinutes = (endHour - startHour) * 60;
+            const totalWidth = totalMinutes * pxPerMin;
+
+            // Layout Constants
+            const labelWidth = 140;
+            const rowHeight = 60;
+
+            // 1. Time Axis Header (Sticky Top)
+            const header = document.createElement('div');
+            header.className = "sticky top-0 z-30 flex items-end border-b border-white/10 bg-slate-900/95 backdrop-blur shadow-sm";
+            header.style.height = '40px';
+            header.style.minWidth = `${totalWidth + labelWidth}px`; // Ensure it spans properly
+
+            // Spacer for Label Column
+            const corner = document.createElement('div');
+            corner.className = "sticky left-0 z-40 w-[140px] flex-shrink-0 bg-slate-900 border-r border-white/10";
+            header.appendChild(corner);
+
+            // Time Marks Container
+            const axisTrack = document.createElement('div');
+            axisTrack.className = "relative flex-1 h-full";
+
+            for (let h = startHour; h <= endHour; h++) {
+                const left = (h - startHour) * 60 * pxPerMin;
+                // Major Hour Mark
+                const mark = document.createElement('div');
+                mark.className = 'absolute bottom-0 border-l border-slate-600 h-3';
+                mark.style.left = `${left}px`;
+
+                // Label
+                const label = document.createElement('span');
+                const hourDisplay = h > 12 ? h - 12 : (h === 0 || h === 24 ? 12 : h);
+                const ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
+                label.className = "absolute -top-5 -left-4 w-8 text-center text-[10px] font-bold text-slate-400 font-mono";
+                label.innerText = `${hourDisplay} ${ampm}`;
+                mark.appendChild(label);
+
+                axisTrack.appendChild(mark);
+
+                // Half-hour mark (subtle)
+                if (h < endHour) {
+                    const halfLeft = left + (30 * pxPerMin);
+                    const halfMark = document.createElement('div');
+                    halfMark.className = 'absolute bottom-0 border-l border-white/5 h-1.5';
+                    halfMark.style.left = `${halfLeft}px`;
+                    axisTrack.appendChild(halfMark);
+                }
+            }
+            header.appendChild(axisTrack);
+            container.appendChild(header);
+
+            // 2. Rows Container
+            const rowsContainer = document.createElement('div');
+            rowsContainer.className = "relative";
+            rowsContainer.style.minWidth = `${totalWidth + labelWidth}px`;
+
+            // Helper: Create Row
+            const createRow = (name, colorClass, isStriped) => {
+                const row = document.createElement('div');
+                row.className = `flex group h-[60px] border-b border-white/5 ${isStriped ? 'bg-white/[0.02]' : ''} hover:bg-white/[0.04] transition-colors`;
+
+                // Sticky Label
+                const label = document.createElement('div');
+                label.className = `sticky left-0 z-20 w-[140px] flex-shrink-0 flex items-center justify-end pr-4 text-xs font-bold border-r border-white/10 ${colorClass} bg-slate-900/90 backdrop-blur group-hover:bg-slate-800/90 transition-colors`;
+                label.innerText = name;
+                row.appendChild(label);
+
+                // Timeline Track
+                const track = document.createElement('div');
+                track.className = "relative flex-1 h-full";
+
+                // Vertical Grid Lines
+                for (let h = startHour; h <= endHour; h++) {
+                    const left = (h - startHour) * 60 * pxPerMin;
+                    const line = document.createElement('div');
+                    line.className = "absolute top-0 bottom-0 border-l border-white/5 pointer-events-none";
+                    line.style.left = `${left}px`;
+                    track.appendChild(line);
+                }
+
+                row.appendChild(track);
+                return { row, track };
+            };
+
+            const stRowObj = createRow('ServiceTitan', 'text-blue-400', false);
+            const samTripRowObj = createRow('Samsara Move', 'text-emerald-400', true);
+            const samStopRowObj = createRow('Samsara Stop', 'text-amber-400', false);
+
+            rowsContainer.appendChild(stRowObj.row);
+            rowsContainer.appendChild(samTripRowObj.row);
+            rowsContainer.appendChild(samStopRowObj.row);
+
+            container.appendChild(rowsContainer);
+
+            // --- TIME PARSING & RENDER HELPERS ---
+            const resolveTime = (timeStr) => {
+                if (!timeStr) return null;
+                const ampmParts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                if (ampmParts) {
+                    let h = parseInt(ampmParts[1]);
+                    const m = parseInt(ampmParts[2]);
+                    const p = ampmParts[3].toUpperCase();
+                    if (p === 'PM' && h < 12) h += 12;
+                    if (p === 'AM' && h === 12) h = 0;
+                    return h * 60 + m;
+                }
+                const time24Parts = timeStr.match(/(\d{2}):(\d{2})/);
+                if (time24Parts) return parseInt(time24Parts[1]) * 60 + parseInt(time24Parts[2]);
+                return null;
+            };
+
+            const renderBar = (track, startStr, endStr, durationHours, colorBg, title) => {
+                const startMinsOfDay = resolveTime(startStr);
+                let durationMins = 0;
+
+                if (durationHours !== undefined && durationHours !== null) {
+                    durationMins = durationHours * 60;
+                } else {
+                    const endMinsOfDay = resolveTime(endStr);
+                    if (startMinsOfDay !== null && endMinsOfDay !== null) {
+                        durationMins = endMinsOfDay - startMinsOfDay;
+                    }
+                }
+
+                if (startMinsOfDay === null || durationMins <= 0) return;
+
+                const startOffset = startMinsOfDay - (startHour * 60);
+                if (startOffset < -durationMins) return;
+
+                const left = (Math.max(0, startOffset) * pxPerMin);
+                let width = durationMins * pxPerMin;
+                if (startOffset < 0) width += (startOffset * pxPerMin);
+
+                const bar = document.createElement('div');
+                // Added distinct gradient and shadow
+                bar.className = `absolute top-[12px] h-[36px] rounded-md shadow-md border border-white/20 cursor-help ${colorBg} hover:brightness-110 transition z-10 flex items-center px-2 overflow-hidden`;
+                bar.style.left = `${left}px`;
+                bar.style.width = `${Math.max(2, width)}px`;
+                bar.title = `${title} (${startStr} - ${endStr || '?'})`;
+
+                // Inner Label for wider bars
+                if (width > 60) {
+                    bar.innerHTML = `<span class="text-[10px] font-bold text-white/90 truncate drop-shadow-md select-none">${title}</span>`;
+                }
+
+                track.appendChild(bar);
+            };
+
+            // --- DATA INJECTION ---
+            if (item.serviceTitan.activities) {
+                item.serviceTitan.activities.forEach(act => {
+                    let color = 'bg-gradient-to-r from-blue-600 to-blue-500';
+                    if (act.activityType.toLowerCase().includes('travel')) color = 'bg-gradient-to-r from-blue-500 to-cyan-500';
+                    if (act.activityType.toLowerCase().includes('shop')) color = 'bg-gradient-to-r from-indigo-500 to-purple-500';
+                    renderBar(stRowObj.track, act.startTime, act.endTime, act.duration, color, act.activityType);
+                });
+            }
+
+            if (item.samsara.trips) {
+                item.samsara.trips.forEach(trip => {
+                    let color = 'bg-gradient-to-r from-emerald-600 to-emerald-500';
+                    if (trip.flagged) color = 'bg-gradient-to-r from-red-600 to-red-500';
+                    else if (trip.distance < 0.5) color = 'bg-gradient-to-r from-slate-600 to-slate-500';
+                    renderBar(samTripRowObj.track, trip.startTime, trip.endTime, trip.duration, color, `Trip: ${trip.distance} mi`);
+                });
+            }
+
+            if (item.samsara.gaps) {
+                item.samsara.gaps.forEach(gap => {
+                    if (gap.isPotentialWork) {
+                        renderBar(samStopRowObj.track, gap.startTime, gap.endTime, gap.duration, 'bg-amber-500/80 dashed-border', 'Potential Work');
+                    }
+                });
+            }
+            if (item.samsara.stops) {
+                item.samsara.stops.forEach(stop => {
+                    renderBar(samStopRowObj.track, stop.arrivalTime, stop.departureTime, null, 'bg-slate-700/50', `Stop: ${stop.location}`);
+                });
+            }
+        }
+
+        // --- VERTICAL TIMELINE RENDERER (Renamed) ---
+        function renderVerticalTimeline(item) {
+            // ... [Existing Logic] ...
+            // Just need to ensure element IDs are correct since I wrapped them
+
 
             const colSt = document.getElementById('col-st');
 
